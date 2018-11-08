@@ -300,10 +300,15 @@ class Volunteer
     }
 
     /**
-     * @return StallParticipation|null
+     * @return Participation|null
      */
-    public function getParticipations(): ?StallParticipation
+    public function getParticipations(): ?Participation
     {
         return $this->participations;
+    }
+
+    public function __toString()
+    {
+        return $this->firstName . " " . $this->lastName;
     }
 }

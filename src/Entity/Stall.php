@@ -261,4 +261,5 @@ class Stall
     {
         $this->isSitting = $isSitting;
     }
+
 }
