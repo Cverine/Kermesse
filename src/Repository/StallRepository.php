@@ -19,6 +19,7 @@ class StallRepository extends ServiceEntityRepository
         parent::__construct($registry, Stall::class);
     }
 
+
 //    /**
 //     * @return Stall[] Returns an array of Stall objects
 //     */

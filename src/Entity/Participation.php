@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +39,13 @@ class Participation
     private $slot;
 
     /**
+     * @var Volunteer[]|null
+     *
+     * @ORM\ManyToMany(targetEntity=Volunteer::class)
+     */
+    private $listVolunteers;
+
+    /**
      * @var Volunteer|null
      *
      * @ORM\ManyToOne(targetEntity=Volunteer::class, inversedBy="participations")
@@ -47,9 +55,14 @@ class Participation
     /**
      * @var Stall|null
      *
-     * @ORM\ManyToOne(targetEntity=Stall::class)
+     * @ORM\ManyToOne(targetEntity=Stall::class, inversedBy="participations")
      */
     private $stall;
+
+    public function __construct()
+    {
+        $this->listVolunteers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -105,5 +118,36 @@ class Participation
     public function setStall(?Stall $stall): void
     {
         $this->stall = $stall;
+    }
+
+    /**
+     * @return Collection|Volunteer[]|null
+     */
+    public function getListVolunteers(): ?Collection
+    {
+        return $this->listVolunteers;
+    }
+
+    /**
+     * @param Volunteer $volunteer
+     */
+    public function addListVolunteers(Volunteer $volunteer)
+    {
+        if ($this->listVolunteers->contains($volunteer)) {
+            return;
+        }
+        $this->listVolunteers->add($volunteer);
+
+    }
+
+    /**
+     * @param Volunteer $volunteer
+     */
+    public function removeListVolunteers(Volunteer $volunteer)
+    {
+        if (!$this->listVolunteers->contains($volunteer)) {
+            return;
+        }
+        $this->listVolunteers->removeElement($volunteer);
     }
 }

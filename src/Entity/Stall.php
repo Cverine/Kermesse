@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,6 +14,12 @@ class Stall
     const GRADE_MATERNELLE = 1;
     const GRADE_PRIMAIRE = 2;
 
+    const SLOT1 = "First slot";
+    const SLOT2 = "Second slot";
+    const SLOT3 = "Third slot";
+    const SLOT4 = "Prepare slot";
+    const SLOT5 = "Tidy slot";
+
 
     /**
      * @ORM\Id()
@@ -22,11 +29,10 @@ class Stall
     private $id;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
-     *
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255)
+
      */
     private $name;
 
@@ -95,6 +101,18 @@ class Stall
     private $isSitting;
 
     /**
+     * @var Participation|null
+     *
+     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="stall")
+     */
+    private $participations;
+
+    public function __construct()
+    {
+        $this->participations = new ArrayCollection();
+    }
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -103,7 +121,7 @@ class Stall
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getName(): ?string
     {
@@ -161,7 +179,7 @@ class Stall
     /**
      * @param bool $firstSlot
      */
-    public function setFirstSlot(bool $firstSlot): void
+    public function setFirstSlot(?bool $firstSlot): void
     {
         $this->firstSlot = $firstSlot;
     }
@@ -177,7 +195,7 @@ class Stall
     /**
      * @param bool $secondSlot
      */
-    public function setSecondSlot(bool $secondSlot): void
+    public function setSecondSlot(?bool $secondSlot): void
     {
         $this->secondSlot = $secondSlot;
     }
@@ -193,7 +211,7 @@ class Stall
     /**
      * @param bool $thirdSlot
      */
-    public function setThirdSlot(bool $thirdSlot): void
+    public function setThirdSlot(?bool $thirdSlot): void
     {
         $this->thirdSlot = $thirdSlot;
     }
@@ -209,7 +227,7 @@ class Stall
     /**
      * @param bool $prepare
      */
-    public function setPrepare(bool $prepare): void
+    public function setPrepare(?bool $prepare): void
     {
         $this->prepare = $prepare;
     }
@@ -225,7 +243,7 @@ class Stall
     /**
      * @param bool $tidy
      */
-    public function setTidy(bool $tidy): void
+    public function setTidy(?bool $tidy): void
     {
         $this->tidy = $tidy;
     }
@@ -241,7 +259,7 @@ class Stall
     /**
      * @param bool $isSensitive
      */
-    public function setIsSensitive(bool $isSensitive): void
+    public function setIsSensitive(?bool $isSensitive): void
     {
         $this->isSensitive = $isSensitive;
     }
@@ -257,9 +275,30 @@ class Stall
     /**
      * @param bool $isSitting
      */
-    public function setIsSitting(bool $isSitting): void
+    public function setIsSitting(?bool $isSitting): void
     {
         $this->isSitting = $isSitting;
     }
 
+    /**
+     * @return Participation|null
+     */
+    public function getParticipations(): ?Participation
+    {
+        return $this->participations;
+    }
+
+    /**
+     * @param Participation|null $participations
+     */
+    public function setParticipations(?Participation $participations): void
+    {
+        $this->participations = $participations;
+    }
+
+
+    public function __toString(): ?string
+    {
+        return $this->getName() ?: '';
+    }
 }

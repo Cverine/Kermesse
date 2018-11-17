@@ -19,32 +19,69 @@ class VolunteerRepository extends ServiceEntityRepository
         parent::__construct($registry, Volunteer::class);
     }
 
-//    /**
-//     * @return Volunteer[] Returns an array of Volunteer objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Volunteer[]
+     */
+    public function findBySensitive()
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.okSensitive = true')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Volunteer
+    public function findByFirstSlot()
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.firstSlot = true')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
     }
-    */
+
+    public function findBySecondSlot()
+    {
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.secondSlot = true')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByThirdSlot()
+    {
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.thirdSlot = true')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByPrepare()
+    {
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.prepare = true')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByTidy()
+    {
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.tidy = true')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findBySit()
+    {
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.isSitting = true')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
