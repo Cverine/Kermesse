@@ -11,10 +11,12 @@ namespace App\Admin;
 use App\Entity\Stall;
 use App\Entity\Volunteer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ChoiceFieldMaskType;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ParticipationAdmin extends AbstractAdmin
@@ -63,16 +65,42 @@ class ParticipationAdmin extends AbstractAdmin
     {
         $list
             ->addIdentifier('volunteer')
+            ->add('listVolunteers')
             ->add('stall')
             ->add('slot')
+            ->add('_action', null, [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => [],
+                ]
+            ]);
         ;
+    }
+
+    protected function configureShowFields(ShowMapper $show)
+    {
+        $show
+            ->add('id')
+            ->add('stall')
+            ->add('volunteer')
+            ->add('listVolunteers')
+            ->add('slot')
+            ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
         $filter
-            ->add('volunteer', null, ['show_filter' =>true])
             ->add('stall', null, ['show_filter' =>true])
+            ->add('volunteer', null, ['show_filter' =>true])
+            ->add('slot', null, ['show_filter' =>true])
         ;
     }
+
+    public function getExportFields()
+    {
+        return ['volunteer', 'stall', 'slot', 'listVolunteers'];
+    }
+
 }

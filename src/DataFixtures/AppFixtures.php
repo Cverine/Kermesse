@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 100; $i ++) {
             $volunteer = new Volunteer();
             $volunteer->setFirstName($faker->firstName);
-            $volunteer->setLastName($faker->firstName);
+            $volunteer->setLastName($faker->lastName);
             $volunteer->setPrepare($faker->boolean);
             $volunteer->setOkSensitive($faker->boolean(2));
             $volunteer->setIsSitting($faker->boolean(10));
