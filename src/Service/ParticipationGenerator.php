@@ -16,11 +16,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ParticipationGenerator
 {
-    const SLOT1 = "First slot";
-    const SLOT2 = "Second slot";
-    const SLOT3 = "Third slot";
-    const SLOT4 = "Prepare slot";
-    const SLOT5 = "Tidy slot";
+    const SLOT1 = 1;
+    const SLOT2 = 2;
+    const SLOT3 = 3;
+    const SLOT4 = 4;
+    const SLOT5 = 5;
 
     /**
      * @var VolunteerRepository
@@ -93,7 +93,7 @@ class ParticipationGenerator
         if ($stall->isFirstSlot() === true) {
             $exist = $this->participationRepository->findBy([
                 'stall' => $stall,
-                'slot' => "First slot"
+                'slot' => 1
             ]);
             if (empty($exist)) {
                 $participation = new Participation();
@@ -106,7 +106,7 @@ class ParticipationGenerator
         if ($stall->isSecondSlot() === true) {
             $exist = $this->participationRepository->findBy([
                 'stall' => $stall,
-                'slot' => "Second slot"
+                'slot' => 2
             ]);
             if (empty($exist)) {
                 $participation = new Participation();
@@ -119,7 +119,7 @@ class ParticipationGenerator
         if ($stall->isThirdSlot() === true) {
             $exist = $this->participationRepository->findBy([
                 'stall' => $stall,
-                'slot' => "Third slot"
+                'slot' => 3
             ]);
             if (empty($exist)) {
                 $participation = new Participation();

@@ -10,18 +10,27 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Participation
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"slot", "stall"},
+ *     errorPath="slot",
+ *     message="Ce créneau existe déjà pour ce stand"
+ * )
+
  */
 class Participation
 {
-    const SLOT1 = "First slot";
-    const SLOT2 = "Second slot";
-    const SLOT3 = "Third slot";
-    const SLOT4 = "Prepare slot";
-    const SLOT5 = "Tidy slot";
+    const SLOT1 = 1;
+    const SLOT2 = 2;
+    const SLOT3 = 3;
+    const SLOT4 = 4;
+    const SLOT5 = 5;
 
     /**
      * @ORM\Id
@@ -42,6 +51,7 @@ class Participation
      * @var Volunteer[]|null
      *
      * @ORM\ManyToMany(targetEntity=Volunteer::class, inversedBy="participations")
+     *
      */
     private $volunteers;
 
@@ -126,5 +136,24 @@ class Participation
             return;
         }
         $this->volunteers->removeElement($volunteer);
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     *
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        $nbVolunteers = $this->getStall()->getNbVolunteer();
+        if (count($this->getVolunteers()) > $nbVolunteers ) {
+            $context->buildViolation('Le nombre de volontaires dépasse le nombre prévu ( ' . $nbVolunteers . ' )' )
+                ->atPath('volunteers')
+                ->addViolation();
+        }
+
+
+
     }
 }

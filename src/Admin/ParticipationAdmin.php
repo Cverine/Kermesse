@@ -11,7 +11,6 @@ namespace App\Admin;
 use App\Entity\Stall;
 use App\Entity\Volunteer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -22,11 +21,11 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ParticipationAdmin extends AbstractAdmin
 {
-    const SLOT1 = "First slot";
-    const SLOT2 = "Second slot";
-    const SLOT3 = "Third slot";
-    const SLOT4 = "Prepare slot";
-    const SLOT5 = "Tidy slot";
+    const SLOT1 = 1;
+    const SLOT2 = 2;
+    const SLOT3 = 3;
+    const SLOT4 = 4;
+    const SLOT5 = 5;
 
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -36,19 +35,14 @@ class ParticipationAdmin extends AbstractAdmin
                 'class' => Stall::class,
                 'choice_label'  => 'name'
             ])
-/*            ->add('volunteer', EntityType::class, [
-                'class' => Volunteer::class,
-                'choice_label' => 'lastName'
-            ])*/
-
             ->add('volunteers', ModelType::class, [
                 'property' => 'firstName',
                 'label' => 'volontaire',
                 'required' => false,
                 'multiple' => true,
                 'class' => Volunteer::class,
-      'translation_domain' => 'SonataUserBundle'
-    ])
+                'translation_domain' => 'SonataUserBundle'
+            ])
            ->add('slot', ChoiceFieldMaskType::class, [
                 'multiple' => false,
                 'expanded' => false,
