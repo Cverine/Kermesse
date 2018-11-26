@@ -11,6 +11,7 @@ namespace App\Admin;
 use App\Entity\Stall;
 use App\Entity\Volunteer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -94,7 +95,11 @@ class ParticipationAdmin extends AbstractAdmin
 
     public function getExportFields()
     {
-        return ['volunteers', 'stall', 'slot'];
+        return [
+            'volunteers' => 'exportedVolunteers',
+            'stall' => 'stall',
+            'slot' => 'slot'
+        ];
     }
 
 }

@@ -24,6 +24,11 @@ class Volunteer
      * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *    pattern="/\d/",
+     *    match=false,
+     *    message="Il ne peut pas y avoir de nombre dans le nom"
+     * )
      */
     private $name;
 

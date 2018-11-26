@@ -62,6 +62,8 @@ class Participation
      */
     private $stall;
 
+    protected $exportedVolunteers;
+
     public function __construct()
     {
         $this->volunteers = new \Doctrine\Common\Collections\ArrayCollection();
@@ -151,6 +153,21 @@ class Participation
         } else {
             return 0;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getExportedVolunteers()
+    {
+        $exportedVolunteers = [];
+        $i = 1;
+        foreach ($this->getVolunteers() as $key => $volunteer) {
+            $exportedVolunteers[] = /*$i .
+                ') ' . */$volunteer->getName();
+        $i++;
+    }
+        return $this->exportedVolunteers = join(', ', $exportedVolunteers);
     }
 
     /**
