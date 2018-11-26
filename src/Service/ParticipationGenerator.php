@@ -69,7 +69,7 @@ class ParticipationGenerator
                 $participation->setStall($stall);
                 $participation->setSlot(4);
                 foreach ($prepareVolunteers as $parent) {
-                    $participation->addListVolunteers($parent);
+                    $participation->addVolunteers($parent);
                 }
                 $manager->persist($participation);
             }
@@ -84,9 +84,9 @@ class ParticipationGenerator
                 $participation->setStall($stall);
                 $participation->setSlot(5);
                 foreach ($tidyVolunteers as $parent) {
-                    $participation->addListVolunteers($parent);
-                    $manager->persist($participation);
+                    $participation->addVolunteers($parent);
                 }
+                $manager->persist($participation);
             }
         }
 
@@ -95,7 +95,7 @@ class ParticipationGenerator
                 'stall' => $stall,
                 'slot' => "First slot"
             ]);
-            for ($i = count($exist) + 1; $i <= $stall->getNbVolunteer(); $i++) {
+            if (empty($exist)) {
                 $participation = new Participation();
                 $participation->setStall($stall);
                 $participation->setSlot(1);
@@ -108,7 +108,7 @@ class ParticipationGenerator
                 'stall' => $stall,
                 'slot' => "Second slot"
             ]);
-            for ($i = count($exist) + 1; $i <= $stall->getNbVolunteer(); $i++) {
+            if (empty($exist)) {
                 $participation = new Participation();
                 $participation->setStall($stall);
                 $participation->setSlot(2);
@@ -121,7 +121,7 @@ class ParticipationGenerator
                 'stall' => $stall,
                 'slot' => "Third slot"
             ]);
-            for ($i = count($exist) + 1; $i <= $stall->getNbVolunteer(); $i++) {
+            if (empty($exist)) {
                 $participation = new Participation();
                 $participation->setStall($stall);
                 $participation->setSlot(3);
@@ -135,44 +135,57 @@ class ParticipationGenerator
     {
         $manager = $this->manager;
 
-        $firstSlotVolunteers = $this->volunteerRepository->findByFirstSlot();
-        $secondSlotVolunteers = $this->volunteerRepository->findBySecondSlot();
-        $thirdSlotVolunteers = $this->volunteerRepository->findByThirdSlot();
-        $sittingVolunteers = $this->volunteerRepository->findBySit();
-
         $firstSlotParticipations = $this->participationRepository->findByFirstSlot();
         $secondSlotParticipations = $this->participationRepository->findBySecondSlot();
         $thirdSlotParticipations = $this->participationRepository->findByThirdSlot();
         $sittingParticipations = $this->participationRepository->findBySit();
 
+
+/*        $slotVolunteers = $this->volunteerRepository->findBySit(); TODO finaliser les sitting priorities
         foreach ($sittingParticipations as $participation) {
-            if ($participation->getVolunteer() === null) {
-                $parent = array_shift($sittingVolunteers);
-                $participation->setVolunteer($parent);
-                $manager->persist($participation);
-            }
-        }
+            $nbVolunteer = $participation->getStall()->getNbVolunteer();
+
+            $manager->persist($participation);
+        }*/
+
+        $slotVolunteers = $this->volunteerRepository->findByFirstSlot();
         foreach ($firstSlotParticipations as $participation) {
-            if ($participation->getVolunteer() === null) {
-                $parent = array_shift($firstSlotVolunteers);
-                $participation->setVolunteer($parent);
-                $manager->persist($participation);
+            $nbVolunteer = $participation->getStall()->getNbVolunteer();
+            for ($i = count($participation->getVolunteers()) + 1; $i <= $nbVolunteer; $i++) {
+                $parent = array_shift($slotVolunteers);
+                if ($parent !== null) {
+                    $participation->addVolunteers($parent);
+                }
             }
+            $manager->persist($participation);
         }
+
+        $slotVolunteers = $this->volunteerRepository->findBySecondSlot();
         foreach ($secondSlotParticipations as $participation) {
-            if ($participation->getVolunteer() === null) {
-                $parent = array_shift($secondSlotVolunteers);
-                $participation->setVolunteer($parent);
-                $manager->persist($participation);
+            $nbVolunteer = $participation->getStall()->getNbVolunteer();
+
+            for ($i = count($participation->getVolunteers()) + 1; $i <= $nbVolunteer; $i++) {
+                $parent = array_shift($slotVolunteers);
+                if ($parent !== null) {
+                    $participation->addVolunteers($parent);
+                }
             }
+            $manager->persist($participation);
         }
+
+        $slotVolunteers = $this->volunteerRepository->findByThirdSlot();
         foreach ($thirdSlotParticipations as $participation) {
-            if ($participation->getVolunteer() === null) {
-                $parent = array_shift($thirdSlotVolunteers);
-                $participation->setVolunteer($parent);
-                $manager->persist($participation);
+            $nbVolunteer = $participation->getStall()->getNbVolunteer();
+
+            for ($i = count($participation->getVolunteers()) + 1; $i <= $nbVolunteer; $i++) {
+                $parent = array_shift($slotVolunteers);
+                if ($parent !== null) {
+                    $participation->addVolunteers($parent);
+                }
             }
+            $manager->persist($participation);
         }
         $manager->flush();
     }
+
 }

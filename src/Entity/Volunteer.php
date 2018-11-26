@@ -106,7 +106,7 @@ class Volunteer
     /**
      * @var Participation|null
      *
-     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="volunteer")
+     * @ORM\ManyToMany(targetEntity=Participation::class, mappedBy="volunteers")
      */
     private $participations;
 

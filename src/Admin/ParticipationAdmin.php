@@ -16,6 +16,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ChoiceFieldMaskType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -35,19 +36,19 @@ class ParticipationAdmin extends AbstractAdmin
                 'class' => Stall::class,
                 'choice_label'  => 'name'
             ])
-            ->add('volunteer', EntityType::class, [
+/*            ->add('volunteer', EntityType::class, [
                 'class' => Volunteer::class,
                 'choice_label' => 'lastName'
-            ])
+            ])*/
 
-/*            ->add('volunteer', 'Sonata\AdminBundle\Form\Type\ModelType', [ TODO voir si on peut afficher cet input lorsque stall = prepare ou tidy
+            ->add('volunteers', ModelType::class, [
                 'property' => 'firstName',
                 'label' => 'volontaire',
                 'required' => false,
                 'multiple' => true,
                 'class' => Volunteer::class,
       'translation_domain' => 'SonataUserBundle'
-    ])*/
+    ])
            ->add('slot', ChoiceFieldMaskType::class, [
                 'multiple' => false,
                 'expanded' => false,
@@ -64,8 +65,7 @@ class ParticipationAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list)
     {
         $list
-            ->addIdentifier('volunteer')
-            ->add('listVolunteers')
+            ->add('volunteers')
             ->add('stall')
             ->add('slot')
             ->add('_action', null, [
@@ -83,8 +83,7 @@ class ParticipationAdmin extends AbstractAdmin
         $show
             ->add('id')
             ->add('stall')
-            ->add('volunteer')
-            ->add('listVolunteers')
+            ->add('volunteers')
             ->add('slot')
             ;
     }
@@ -93,14 +92,14 @@ class ParticipationAdmin extends AbstractAdmin
     {
         $filter
             ->add('stall', null, ['show_filter' =>true])
-            ->add('volunteer', null, ['show_filter' =>true])
+            ->add('volunteers', null, ['show_filter' =>true])
             ->add('slot', null, ['show_filter' =>true])
         ;
     }
 
     public function getExportFields()
     {
-        return ['volunteer', 'stall', 'slot', 'listVolunteers'];
+        return ['volunteers', 'stall', 'slot'];
     }
 
 }

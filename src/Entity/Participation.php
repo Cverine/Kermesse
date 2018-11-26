@@ -41,16 +41,9 @@ class Participation
     /**
      * @var Volunteer[]|null
      *
-     * @ORM\ManyToMany(targetEntity=Volunteer::class)
+     * @ORM\ManyToMany(targetEntity=Volunteer::class, inversedBy="participations")
      */
-    private $listVolunteers;
-
-    /**
-     * @var Volunteer|null
-     *
-     * @ORM\ManyToOne(targetEntity=Volunteer::class, inversedBy="participations")
-     */
-    private $volunteer;
+    private $volunteers;
 
     /**
      * @var Stall|null
@@ -61,7 +54,7 @@ class Participation
 
     public function __construct()
     {
-        $this->listVolunteers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->volunteers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -89,22 +82,6 @@ class Participation
     }
 
     /**
-     * @return Volunteer|null
-     */
-    public function getVolunteer(): ?Volunteer
-    {
-        return $this->volunteer;
-    }
-
-    /**
-     * @param Volunteer|null $volunteer
-     */
-    public function setVolunteer(?Volunteer $volunteer): void
-    {
-        $this->volunteer = $volunteer;
-    }
-
-    /**
      * @return Stall|null
      */
     public function getStall(): ?Stall
@@ -123,31 +100,31 @@ class Participation
     /**
      * @return Collection|Volunteer[]|null
      */
-    public function getListVolunteers(): ?Collection
+    public function getVolunteers(): ?Collection
     {
-        return $this->listVolunteers;
+        return $this->volunteers;
     }
 
     /**
      * @param Volunteer $volunteer
      */
-    public function addListVolunteers(Volunteer $volunteer)
+    public function addVolunteers(Volunteer $volunteer)
     {
-        if ($this->listVolunteers->contains($volunteer)) {
+        if ($this->volunteers->contains($volunteer)) {
             return;
         }
-        $this->listVolunteers->add($volunteer);
+        $this->volunteers->add($volunteer);
 
     }
 
     /**
      * @param Volunteer $volunteer
      */
-    public function removeListVolunteers(Volunteer $volunteer)
+    public function removeVolunteers(Volunteer $volunteer)
     {
-        if (!$this->listVolunteers->contains($volunteer)) {
+        if (!$this->volunteers->contains($volunteer)) {
             return;
         }
-        $this->listVolunteers->removeElement($volunteer);
+        $this->volunteers->removeElement($volunteer);
     }
 }
