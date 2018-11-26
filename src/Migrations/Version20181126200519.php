@@ -8,16 +8,14 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20181119210258 extends AbstractMigration
+final class Version20181126200519 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-//        $this->addSql('ALTER TABLE participation DROP FOREIGN KEY FK_AB55E24F8EFAB6B1');
-//        $this->addSql('DROP INDEX IDX_AB55E24F8EFAB6B1 ON participation');
-//        $this->addSql('ALTER TABLE participation DROP volunteer_id');
+        $this->addSql('ALTER TABLE volunteer ADD name VARCHAR(255) NOT NULL, DROP first_name, DROP last_name');
     }
 
     public function down(Schema $schema) : void
@@ -25,8 +23,6 @@ final class Version20181119210258 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE participation ADD volunteer_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE participation ADD CONSTRAINT FK_AB55E24F8EFAB6B1 FOREIGN KEY (volunteer_id) REFERENCES volunteer (id)');
-        $this->addSql('CREATE INDEX IDX_AB55E24F8EFAB6B1 ON participation (volunteer_id)');
+        $this->addSql('ALTER TABLE volunteer ADD last_name VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, CHANGE name first_name VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
     }
 }

@@ -25,16 +25,7 @@ class Volunteer
      *
      * @Assert\NotBlank()
      */
-    private $firstName;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=255, nullable=false)
-     *
-     * @Assert\NotBlank()
-     */
-    private $lastName;
+    private $name;
 
     /**
      * @var string|null
@@ -126,33 +117,17 @@ class Volunteer
     /**
      * @return string|null
      */
-    public function getFirstName(): ?string
+    public function getName(): ?string
     {
-        return $this->firstName;
+        return $this->name;
     }
 
     /**
-     * @param string $firstName|null
+     * @param string $name|null
      */
-    public function setFirstName(string $firstName): void
+    public function setName(string $name): void
     {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName|null
-     */
-    public function setLastName(string $lastName): void
-    {
-        $this->lastName = $lastName;
+        $this->name = $name;
     }
 
     /**
@@ -309,7 +284,7 @@ class Volunteer
 
     public function __toString()
     {
-        return $this->firstName . " " . $this->lastName;
+        return $this->name;
     }
 }
 

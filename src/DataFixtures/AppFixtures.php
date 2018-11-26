@@ -14,10 +14,9 @@ class AppFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for ($i = 0; $i < 100; $i ++) {
+        for ($i = 0; $i < 40; $i ++) {
             $volunteer = new Volunteer();
-            $volunteer->setFirstName($faker->firstName);
-            $volunteer->setLastName($faker->lastName);
+            $volunteer->setName($faker->firstName . ' ' . $faker->lastName);
             $volunteer->setPrepare($faker->boolean);
             $volunteer->setOkSensitive($faker->boolean(2));
             $volunteer->setIsSitting($faker->boolean(10));
