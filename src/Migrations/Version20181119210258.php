@@ -28,5 +28,6 @@ final class Version20181119210258 extends AbstractMigration
         $this->addSql('ALTER TABLE participation ADD volunteer_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE participation ADD CONSTRAINT FK_AB55E24F8EFAB6B1 FOREIGN KEY (volunteer_id) REFERENCES volunteer (id)');
         $this->addSql('CREATE INDEX IDX_AB55E24F8EFAB6B1 ON participation (volunteer_id)');
+
     }
 }

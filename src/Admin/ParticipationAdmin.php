@@ -62,6 +62,7 @@ class ParticipationAdmin extends AbstractAdmin
             ->add('volunteers')
             ->add('stall')
             ->add('slot')
+            ->add('missingVolunteers')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],

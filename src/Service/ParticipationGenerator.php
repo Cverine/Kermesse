@@ -147,11 +147,11 @@ class ParticipationGenerator
 
             $manager->persist($participation);
         }*/
-
         $slotVolunteers = $this->volunteerRepository->findByFirstSlot();
         foreach ($firstSlotParticipations as $participation) {
             $nbVolunteer = $participation->getStall()->getNbVolunteer();
-            for ($i = count($participation->getVolunteers()) + 1; $i <= $nbVolunteer; $i++) {
+            $count = count($participation->getVolunteers()) + 1;
+            for ($i = $count; $i <= $nbVolunteer; $i++) {
                 $parent = array_shift($slotVolunteers);
                 if ($parent !== null) {
                     $participation->addVolunteers($parent);
@@ -163,8 +163,9 @@ class ParticipationGenerator
         $slotVolunteers = $this->volunteerRepository->findBySecondSlot();
         foreach ($secondSlotParticipations as $participation) {
             $nbVolunteer = $participation->getStall()->getNbVolunteer();
+            $count = count($participation->getVolunteers()) + 1;
 
-            for ($i = count($participation->getVolunteers()) + 1; $i <= $nbVolunteer; $i++) {
+            for ($i = $count; $i <= $nbVolunteer; $i++) {
                 $parent = array_shift($slotVolunteers);
                 if ($parent !== null) {
                     $participation->addVolunteers($parent);
@@ -176,8 +177,9 @@ class ParticipationGenerator
         $slotVolunteers = $this->volunteerRepository->findByThirdSlot();
         foreach ($thirdSlotParticipations as $participation) {
             $nbVolunteer = $participation->getStall()->getNbVolunteer();
+            $count = count($participation->getVolunteers()) + 1;
 
-            for ($i = count($participation->getVolunteers()) + 1; $i <= $nbVolunteer; $i++) {
+            for ($i = $count; $i <= $nbVolunteer; $i++) {
                 $parent = array_shift($slotVolunteers);
                 if ($parent !== null) {
                     $participation->addVolunteers($parent);

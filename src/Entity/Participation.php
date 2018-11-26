@@ -139,6 +139,21 @@ class Participation
     }
 
     /**
+     * @return int|null
+     */
+    public function getMissingVolunteers()
+    {
+        $registered = count($this->getVolunteers());
+        $wanted = $this->getStall()->getNbVolunteer();
+        $missing = $wanted - $registered;
+        if ($missing > 0) {
+            return $missing;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
      * @param ExecutionContextInterface $context
      * @param $payload
      *
