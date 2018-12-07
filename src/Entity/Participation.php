@@ -184,8 +184,5 @@ class Participation
                 ->atPath('volunteers')
                 ->addViolation();
         }
-
-
-
     }
 }
