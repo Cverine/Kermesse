@@ -11,19 +11,22 @@ namespace App\Admin;
 use App\Entity\Stall;
 use App\Entity\Volunteer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ChoiceFieldMaskType;
+use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ParticipationAdmin extends AbstractAdmin
 {
-    const SLOT1 = "First slot";
-    const SLOT2 = "Second slot";
-    const SLOT3 = "Third slot";
-    const SLOT4 = "Prepare slot";
-    const SLOT5 = "Tidy slot";
+    const SLOT1 = 1;
+    const SLOT2 = 2;
+    const SLOT3 = 3;
+    const SLOT4 = 4;
+    const SLOT5 = 5;
 
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -33,19 +36,14 @@ class ParticipationAdmin extends AbstractAdmin
                 'class' => Stall::class,
                 'choice_label'  => 'name'
             ])
-            ->add('volunteer', EntityType::class, [
-                'class' => Volunteer::class,
-                'choice_label' => 'lastName'
-            ])
-
-/*            ->add('volunteer', 'Sonata\AdminBundle\Form\Type\ModelType', [ TODO voir si on peut afficher cet input lorsque stall = prepare ou tidy
+            ->add('volunteers', ModelType::class, [
                 'property' => 'firstName',
                 'label' => 'volontaire',
                 'required' => false,
                 'multiple' => true,
                 'class' => Volunteer::class,
-      'translation_domain' => 'SonataUserBundle'
-    ])*/
+                'translation_domain' => 'SonataUserBundle'
+            ])
            ->add('slot', ChoiceFieldMaskType::class, [
                 'multiple' => false,
                 'expanded' => false,
@@ -62,17 +60,46 @@ class ParticipationAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list)
     {
         $list
-            ->addIdentifier('volunteer')
+            ->add('volunteers')
             ->add('stall')
             ->add('slot')
+            ->add('missingVolunteers')
+            ->add('_action', null, [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => [],
+                ]
+            ]);
         ;
+    }
+
+    protected function configureShowFields(ShowMapper $show)
+    {
+        $show
+            ->add('id')
+            ->add('stall')
+            ->add('volunteers')
+            ->add('slot')
+            ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
         $filter
-            ->add('volunteer', null, ['show_filter' =>true])
             ->add('stall', null, ['show_filter' =>true])
+            ->add('volunteers', null, ['show_filter' =>true])
+            ->add('slot', null, ['show_filter' =>true])
         ;
     }
+
+    public function getExportFields()
+    {
+        return [
+            'volunteers' => 'exportedVolunteers',
+            'stall' => 'stall',
+            'slot' => 'slot'
+        ];
+    }
+
 }

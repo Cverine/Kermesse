@@ -10,18 +10,27 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Participation
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"slot", "stall"},
+ *     errorPath="slot",
+ *     message="Ce créneau existe déjà pour ce stand"
+ * )
+
  */
 class Participation
 {
-    const SLOT1 = "First slot";
-    const SLOT2 = "Second slot";
-    const SLOT3 = "Third slot";
-    const SLOT4 = "Prepare slot";
-    const SLOT5 = "Tidy slot";
+    const SLOT1 = 1;
+    const SLOT2 = 2;
+    const SLOT3 = 3;
+    const SLOT4 = 4;
+    const SLOT5 = 5;
 
     /**
      * @ORM\Id
@@ -41,16 +50,10 @@ class Participation
     /**
      * @var Volunteer[]|null
      *
-     * @ORM\ManyToMany(targetEntity=Volunteer::class)
-     */
-    private $listVolunteers;
-
-    /**
-     * @var Volunteer|null
+     * @ORM\ManyToMany(targetEntity=Volunteer::class, inversedBy="participations")
      *
-     * @ORM\ManyToOne(targetEntity=Volunteer::class, inversedBy="participations")
      */
-    private $volunteer;
+    private $volunteers;
 
     /**
      * @var Stall|null
@@ -59,9 +62,11 @@ class Participation
      */
     private $stall;
 
+    protected $exportedVolunteers;
+
     public function __construct()
     {
-        $this->listVolunteers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->volunteers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -89,22 +94,6 @@ class Participation
     }
 
     /**
-     * @return Volunteer|null
-     */
-    public function getVolunteer(): ?Volunteer
-    {
-        return $this->volunteer;
-    }
-
-    /**
-     * @param Volunteer|null $volunteer
-     */
-    public function setVolunteer(?Volunteer $volunteer): void
-    {
-        $this->volunteer = $volunteer;
-    }
-
-    /**
      * @return Stall|null
      */
     public function getStall(): ?Stall
@@ -123,31 +112,77 @@ class Participation
     /**
      * @return Collection|Volunteer[]|null
      */
-    public function getListVolunteers(): ?Collection
+    public function getVolunteers(): ?Collection
     {
-        return $this->listVolunteers;
+        return $this->volunteers;
     }
 
     /**
      * @param Volunteer $volunteer
      */
-    public function addListVolunteers(Volunteer $volunteer)
+    public function addVolunteers(Volunteer $volunteer)
     {
-        if ($this->listVolunteers->contains($volunteer)) {
+        if ($this->volunteers->contains($volunteer)) {
             return;
         }
-        $this->listVolunteers->add($volunteer);
+        $this->volunteers->add($volunteer);
 
     }
 
     /**
      * @param Volunteer $volunteer
      */
-    public function removeListVolunteers(Volunteer $volunteer)
+    public function removeVolunteers(Volunteer $volunteer)
     {
-        if (!$this->listVolunteers->contains($volunteer)) {
+        if (!$this->volunteers->contains($volunteer)) {
             return;
         }
-        $this->listVolunteers->removeElement($volunteer);
+        $this->volunteers->removeElement($volunteer);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMissingVolunteers()
+    {
+        $registered = count($this->getVolunteers());
+        $wanted = $this->getStall()->getNbVolunteer();
+        $missing = $wanted - $registered;
+        if ($missing > 0) {
+            return $missing;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getExportedVolunteers()
+    {
+        $exportedVolunteers = [];
+        $i = 1;
+        foreach ($this->getVolunteers() as $key => $volunteer) {
+            $exportedVolunteers[] = /*$i .
+                ') ' . */$volunteer->getName();
+        $i++;
+    }
+        return $this->exportedVolunteers = join(', ', $exportedVolunteers);
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     *
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        $nbVolunteers = $this->getStall()->getNbVolunteer();
+        if (count($this->getVolunteers()) > $nbVolunteers ) {
+            $context->buildViolation('Le nombre de volontaires dépasse le nombre prévu ( ' . $nbVolunteers . ' )' )
+                ->atPath('volunteers')
+                ->addViolation();
+        }
     }
 }
