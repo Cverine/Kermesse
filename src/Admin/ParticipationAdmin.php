@@ -15,8 +15,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ChoiceFieldMaskType;
-use Sonata\AdminBundle\Form\Type\Filter\ChoiceType;
-use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ParticipationAdmin extends AbstractAdmin
@@ -39,7 +37,16 @@ class ParticipationAdmin extends AbstractAdmin
                 'class' => Volunteer::class,
                 'choice_label' => 'lastName'
             ])
-            ->add('slot', ChoiceFieldMaskType::class, [
+
+/*            ->add('volunteer', 'Sonata\AdminBundle\Form\Type\ModelType', [ TODO voir si on peut afficher cet input lorsque stall = prepare ou tidy
+                'property' => 'firstName',
+                'label' => 'volontaire',
+                'required' => false,
+                'multiple' => true,
+                'class' => Volunteer::class,
+      'translation_domain' => 'SonataUserBundle'
+    ])*/
+           ->add('slot', ChoiceFieldMaskType::class, [
                 'multiple' => false,
                 'expanded' => false,
                 'choices' => [
@@ -67,15 +74,5 @@ class ParticipationAdmin extends AbstractAdmin
             ->add('volunteer', null, ['show_filter' =>true])
             ->add('stall', null, ['show_filter' =>true])
         ;
-    }
-
-    protected function configureBatchActions($actions)
-    {
-
-            $actions['match'] = [
-                'ask_confirmation' => true
-            ];
-
-        return $actions;
     }
 }

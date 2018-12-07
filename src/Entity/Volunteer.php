@@ -286,7 +286,7 @@ class Volunteer
     /**
      * @return bool
      */
-    public function isSitting(): bool
+    public function isSitting(): ?bool
     {
         return $this->isSitting;
     }
@@ -312,3 +312,4 @@ class Volunteer
         return $this->firstName . " " . $this->lastName;
     }
 }
+

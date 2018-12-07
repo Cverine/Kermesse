@@ -15,15 +15,15 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class StallAdmin extends AbstractAdmin
 {
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->with('general info', ['class' => 'col-md-6'])
-            ->add('name', TextType::class)
+            ->add('name'/*, TextType::class*/)
             ->add('grade', ChoiceType::class, [
                 'choices' => [
                     'Maternelle' => Stall::GRADE_MATERNELLE,
@@ -35,7 +35,8 @@ class StallAdmin extends AbstractAdmin
                     1 => 1,
                     2 => 2,
                     3 => 3,
-                    4 => 4
+                    4 => 4,
+                    100 => 100
                 ]
             ])
             ->end()
@@ -83,5 +84,15 @@ class StallAdmin extends AbstractAdmin
             ->add('isSensitive')
             ->add('isSitting')
         ;
+    }
+
+    protected function configureBatchActions($actions)
+    {
+        $actions['match'] = [
+            'label' => 'Répartir les parents',
+            'ask_confirmation' => true
+        ];
+
+        return $actions;
     }
 }

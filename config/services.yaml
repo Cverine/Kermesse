@@ -45,7 +45,7 @@ services:
 
     admin.stall:
         class: App\Admin\StallAdmin
-        arguments: [~, App\Entity\Stall, ~]
+        arguments: [~, App\Entity\Stall, App\Controller\StallAdminController]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Stall }
         public: true
