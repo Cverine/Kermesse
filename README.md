@@ -9,6 +9,7 @@ automatically volunteers-parents on the differents stalls they have to animate.
 
 * Symfony 4.1
 * PHP 7.1 
-* SonataAdminBundle 3.3
+* SonataAdminBundle 3.3 : this bundle is a bit oversized for this kind of project. I chose it to practise it with its basic features and understand how it works.
 
 ## Installation :
+WIP
