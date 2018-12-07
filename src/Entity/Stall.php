@@ -32,7 +32,6 @@ class Stall
      * @var string|null
      *
      * @ORM\Column(type="string", length=255)
-
      */
     private $name;
 
@@ -48,6 +47,12 @@ class Stall
      *
      * @ORM\Column(type="smallint", nullable=true)
      *
+     * @Assert\Range(
+     *     min=1,
+     *     max=100,
+     *     minMessage="Il faut au minimum 1 parent sur ce stand",
+     *     maxMessage="Il ne peut pas y avoir plus de 100 parents"
+     * )
      */
     private $nbVolunteer;
 

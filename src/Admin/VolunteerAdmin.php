@@ -21,8 +21,7 @@ class VolunteerAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('identity', ['class' => 'col-md-6'])
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
+            ->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('phone')
             ->end()
@@ -43,8 +42,7 @@ class VolunteerAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
         $filter
-            ->add('firstName', null, ['show_filter' =>true])
-            ->add('lastName', null, ['show_filter' =>true])
+            ->add('name', null, ['show_filter' =>true])
             ->add('firstSlot', null , ['show_filter' =>true])
             ->add('secondSlot', null, ['show_filter' =>true])
             ->add('thirdSlot', null, ['show_filter' =>true])
@@ -58,8 +56,7 @@ class VolunteerAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list)
     {
         $list
-            ->addIdentifier('firstName')
-            ->addIdentifier('lastName')
+            ->addIdentifier('name')
             ->add('email')
             ->add('phone')
             ->add('firstSlot')
