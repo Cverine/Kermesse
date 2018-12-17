@@ -37,7 +37,7 @@ class ParticipationAdmin extends AbstractAdmin
                 'choice_label'  => 'name'
             ])
             ->add('volunteers', ModelType::class, [
-                'property' => 'firstName',
+                'property' => 'name',
                 'label' => 'volontaire',
                 'required' => false,
                 'multiple' => true,
