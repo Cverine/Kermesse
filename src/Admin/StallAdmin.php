@@ -22,8 +22,8 @@ class StallAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('general info', ['class' => 'col-md-6'])
-            ->add('name'/*, TextType::class*/)
+            ->with('form.group.general_info', ['class' => 'col-md-6'])
+            ->add('name')
             ->add('grade', ChoiceType::class, [
                 'choices' => [
                     'Maternelle' => Stall::GRADE_MATERNELLE,
@@ -40,14 +40,14 @@ class StallAdmin extends AbstractAdmin
                 ]
             ])
             ->end()
-            ->with('schedule', ['class' => 'col-md-6'])
+            ->with('form.group.schedule', ['class' => 'col-md-6'])
             ->add('firstSlot', null, ['data' => true])
             ->add('secondSlot', null, ['data' => true])
             ->add('thirdSlot', null, ['data' => true])
             ->add('prepare')
             ->add('tidy')
             ->end()
-            ->with('extra', ['class' => 'col-md-6'])
+            ->with('form.group.extra', ['class' => 'col-md-6'])
             ->add('isSensitive')
             ->add('isSitting')
             ->end()

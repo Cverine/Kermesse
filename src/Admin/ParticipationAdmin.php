@@ -38,11 +38,9 @@ class ParticipationAdmin extends AbstractAdmin
             ])
             ->add('volunteers', ModelType::class, [
                 'property' => 'name',
-                'label' => 'volontaire',
                 'required' => false,
                 'multiple' => true,
                 'class' => Volunteer::class,
-                'translation_domain' => 'SonataUserBundle'
             ])
            ->add('slot', ChoiceFieldMaskType::class, [
                 'multiple' => false,
@@ -96,9 +94,9 @@ class ParticipationAdmin extends AbstractAdmin
     public function getExportFields()
     {
         return [
-            'volunteers' => 'exportedVolunteers',
-            'stall' => 'stall',
-            'slot' => 'slot'
+            'Volontaires' => 'exportedVolunteers',
+            'Stand' => 'stall',
+            'Créneau' => 'slot'
         ];
     }
 

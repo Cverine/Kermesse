@@ -107,6 +107,8 @@ class ParticipationGenerator
             $manager->persist($participation);
         }*/
         $participations = $this->participationRepository->findAll();
+
+
         foreach ($participations as $participation) {
             $slot = $participation->getSlot();
             $nbVolunteer = $participation->getStall()->getNbVolunteer();

@@ -1,0 +1,86 @@
+app:
+  name: alnj
+
+admin:
+  group:
+    fair: Kermesse
+
+Volunteer : Volontaires
+Stall : Stands
+Participation: Affectations
+First slot: Créneau 1
+Second slot: Créneau 2
+Third slot: Créneau 3
+Prepare slot: Préparation
+Tidy slot: Rangement
+
+filter:
+  label_name: Nom
+  label_first_slot: Créneau 1
+  label_second_slot: Créneau 2
+  label_third_slot: Créneau 3
+  label_prepare: Préparation
+  label_tidy: Rangement
+  label_ok_sensitive: Stand sensible
+  label_is_sensitive: Stand sensible
+  label_is_sitting: Assis
+  label_grade: Niveau
+  label_stall: Stand
+  label_volunteers: Volontaire
+  label_slot: Créneau
+
+list:
+  label_id: Id
+  label_name: Nom
+  label_email: Email
+  label_phone: Téléphone
+  label_first_slot: Créneau 1
+  label_second_slot: Créneau 2
+  label_third_slot: Créneau 3
+  label_prepare: Préparation
+  label_tidy: Rangement
+  label_ok_sensitive: Sensible ok
+  label_is_sensitive: Sensible ok
+  label_is_sitting: Assis
+  label_grade: Niveau
+  label_nb_volunteer: Nbre de volontaires
+  label_stall: Stand
+  label_volunteers: Volontaires
+  label_slot: Créneau
+  label_missing_volunteers: Volontaires manquants
+  label__action: Actions
+
+form:
+  label_name: Nom
+  label_email: Email
+  label_phone: Téléphone
+  label_first_slot: Créneau 1
+  label_second_slot: Créneau 2
+  label_third_slot: Créneau 3
+  label_prepare: Préparation
+  label_tidy: Rangement
+  label_ok_sensitive: Sensible ok
+  label_is_sensitive: Sensible ok
+  label_is_sitting: Assis
+  label_grade: Niveau
+  label_nb_volunteer: Nbre de volontaires
+  label_stall: Stand
+  label_volunteers: Volontaires
+  label_slot: Créneau
+  group:
+    identity: Identité
+    availability: Disponibilités
+    extra: Infos complémentaires
+    general_info: Informations générales
+    schedule: Créneaux
+
+show:
+  label_id: Id
+  label_stall: Stand
+  label_volunteers: Volontaires
+  label_slot: Créneau
+
+breadcrumb:
+  link_volunteer_list: Liste des volontaires
+  link_stall_list: Liste des stands
+  link_participation_list: Liste des affectations

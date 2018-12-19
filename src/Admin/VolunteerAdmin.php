@@ -17,22 +17,23 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class VolunteerAdmin extends AbstractAdmin
 {
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('identity', ['class' => 'col-md-6'])
+            ->with('form.group.identity', ['class' => 'col-md-6'])
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('phone')
             ->end()
-            ->with('availability', ['class' => 'col-md-6'])
+            ->with('form.group.availability', ['class' => 'col-md-6'])
             ->add('firstSlot')
             ->add('secondSlot')
             ->add('thirdSlot')
             ->add('prepare')
             ->add('tidy')
             ->end()
-            ->with('extra', ['class' => 'col-md-6'])
+            ->with('form.group.extra', ['class' => 'col-md-6'])
             ->add('okSensitive')
             ->add('isSitting')
             ->end()
