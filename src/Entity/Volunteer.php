@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -100,7 +101,7 @@ class Volunteer
     private $isSitting;
 
     /**
-     * @var Participation|null
+     * @var Participation[]|null
      *
      * @ORM\ManyToMany(targetEntity=Participation::class, mappedBy="volunteers")
      */
@@ -280,11 +281,34 @@ class Volunteer
     }
 
     /**
-     * @return Participation|null
+     * @return Collection|Participation[]|null
      */
-    public function getParticipations(): ?Participation
+    public function getParticipations(): ?Collection
     {
         return $this->participations;
+    }
+
+    /**
+     * @param Participation $participation
+     */
+    public function addParticipations(Participation $participation)
+    {
+        if ($this->participations->contains($participation)) {
+            return;
+        }
+        $this->participations->add($participation);
+
+    }
+
+    /**
+     * @param Participation $participation
+     */
+    public function removeParticipations(Participation $participation)
+    {
+        if (!$this->participations->contains($participation)) {
+            return;
+        }
+        $this->participations->removeElement($participation);
     }
 
     public function __toString()

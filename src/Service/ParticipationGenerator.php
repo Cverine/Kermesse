@@ -99,7 +99,6 @@ class ParticipationGenerator
             $this->volunteerRepository->findByThirdSlot()
             ];
 
-
 /*        $slotVolunteers = $this->volunteerRepository->findBySit(); TODO finaliser les sitting priorities
         foreach ($sittingParticipations as $participation) {
             $nbVolunteer = $participation->getStall()->getNbVolunteer();

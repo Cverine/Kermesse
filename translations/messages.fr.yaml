@@ -79,8 +79,30 @@ show:
   label_stall: Stand
   label_volunteers: Volontaires
   label_slot: Créneau
+  label_name: Nom
+  label_email: Email
+  label_phone: Téléphone
+  label_first_slot: Créneau 1
+  label_second_slot: Créneau 2
+  label_third_slot: Créneau 3
+  label_prepare: Préparation
+  label_tidy: Rangement
+  label_ok_sensitive: Sensible ok
+  label_is_sensitive: Sensible ok
+  label_is_sitting: Assis
+  label_participations: Affectation(s)
+  group:
+    identity: Identité
+    availability: Disponibilités
+    extra: Infos complémentaires
+    participations: Affectation(s)
 
 breadcrumb:
   link_volunteer_list: Liste des volontaires
   link_stall_list: Liste des stands
   link_participation_list: Liste des affectations
+
+batch:
+  action:
+    dispatch: Répartir les volontaires
+    email: Envoyer les affectations par email

@@ -99,5 +99,4 @@ class ParticipationAdmin extends AbstractAdmin
             'Créneau' => 'slot'
         ];
     }
-
 }

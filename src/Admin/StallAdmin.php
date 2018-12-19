@@ -89,7 +89,7 @@ class StallAdmin extends AbstractAdmin
     protected function configureBatchActions($actions)
     {
         $actions['match'] = [
-            'label' => 'Répartir les parents',
+            'label' => 'batch.action.dispatch',
             'ask_confirmation' => true
         ];
 
