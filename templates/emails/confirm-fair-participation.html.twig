@@ -1,0 +1,9 @@
+<h3>Bonjour {{ name }}</h3>
+
+<p>Vous vous êtes porté volontaire pour tenir un ou plusieurs stands lors de la kermesse.</p>
+<p>Voici stands sur lesquels vous êtes affecté :</p>
+<ul>
+    {% for participation in participations %}
+    <li>{{ participation }}
+    {% endfor %}
+</ul>

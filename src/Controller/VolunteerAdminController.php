@@ -8,17 +8,41 @@
 
 namespace App\Controller;
 
+use App\Service\EmailService;
 use Sonata\AdminBundle\Controller\CRUDController as BaseController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
 class VolunteerAdminController extends BaseController
 {
+    private $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
+    /**
+     * @param ProxyQueryInterface $selectedModelQuery
+     * @param Request|null $request
+     * @return RedirectResponse
+     */
     public function batchActionEmail(ProxyQueryInterface $selectedModelQuery, Request $request = null)
     {
         $volunteers = $selectedModelQuery->execute();
 
+        foreach ($volunteers as $volunteer) {
+            $message = [
+                'name' => $volunteer->getName(),
+                'participations' => $volunteer->getParticipations(),
+                'to' => $volunteer->getEmail()
+            ];
 
+            $this->emailService->sendEmail($message);
+
+        }
+        return new RedirectResponse($this->generateUrl('admin_app_participation_list'));
     }
 }

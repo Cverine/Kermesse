@@ -96,7 +96,7 @@ class VolunteerAdmin extends AbstractAdmin
             ;
     }
 
-    protected function configureBatchActions($actions)
+    public function configureBatchActions($actions)
     {
         $actions['email'] = [
             'label' => 'batch.action.email',
