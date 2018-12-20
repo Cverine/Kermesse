@@ -16,11 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ParticipationGenerator
 {
-    const SLOT1 = 1;
-    const SLOT2 = 2;
-    const SLOT3 = 3;
-    const SLOT4 = 4;
-    const SLOT5 = 5;
+    const SLOTS = [0,1,2,3,4,5];
 
     /**
      * @var VolunteerRepository
@@ -57,75 +53,36 @@ class ParticipationGenerator
     public function initializeParticipations($stall)
     {
         $manager = $this->manager;
-        $prepareVolunteers = $this->volunteerRepository->findByPrepare();
-        $tidyVolunteers = $this->volunteerRepository->findByTidy();
+        $buildSlot = [
+            0,
+            $stall->isFirstSlot(),
+            $stall->isSecondSlot(),
+            $stall->isFirstSlot(),
+            $stall->isPrepare(),
+            $stall->isTidy()
+        ];
+        $volunteersList = [
+            4 => $this->volunteerRepository->findByPrepare(),
+            5 => $this->volunteerRepository->findByTidy(),
+        ];
 
-        if ($stall->isPrepare() === true) {
-            $prepare = $this->participationRepository->findBy([
-                'slot' => 4
-            ]);
-            if (empty($prepare)) {
-                $participation = new Participation();
-                $participation->setStall($stall);
-                $participation->setSlot(4);
-                foreach ($prepareVolunteers as $parent) {
-                    $participation->addVolunteers($parent);
+        for ($i = 1; $i < 6; $i++) {
+            if ($buildSlot[$i] === true) {
+                $slot = $this->participationRepository->findBy([
+                    'stall' => $stall,
+                    'slot' => self::SLOTS[$i]
+                ]);
+                if (empty($slot)) {
+                    $participation = new Participation();
+                    $participation->setStall($stall);
+                    $participation->setSlot(self::SLOTS[$i]);
+                    if ($i === 4 || $i === 5 ) {
+                        foreach ($volunteersList[$i] as $parent) {
+                            $participation->addVolunteers($parent);
+                        }
+                    }
+                    $manager->persist($participation);
                 }
-                $manager->persist($participation);
-            }
-        }
-
-        if ($stall->isTidy() === true) {
-            $tidy = $this->participationRepository->findBy([
-                'slot' => 5
-            ]);
-            if (empty($tidy)) {
-                $participation = new Participation();
-                $participation->setStall($stall);
-                $participation->setSlot(5);
-                foreach ($tidyVolunteers as $parent) {
-                    $participation->addVolunteers($parent);
-                }
-                $manager->persist($participation);
-            }
-        }
-
-        if ($stall->isFirstSlot() === true) {
-            $exist = $this->participationRepository->findBy([
-                'stall' => $stall,
-                'slot' => 1
-            ]);
-            if (empty($exist)) {
-                $participation = new Participation();
-                $participation->setStall($stall);
-                $participation->setSlot(1);
-                $manager->persist($participation);
-            }
-        }
-
-        if ($stall->isSecondSlot() === true) {
-            $exist = $this->participationRepository->findBy([
-                'stall' => $stall,
-                'slot' => 2
-            ]);
-            if (empty($exist)) {
-                $participation = new Participation();
-                $participation->setStall($stall);
-                $participation->setSlot(2);
-                $manager->persist($participation);
-            }
-        }
-
-        if ($stall->isThirdSlot() === true) {
-            $exist = $this->participationRepository->findBy([
-                'stall' => $stall,
-                'slot' => 3
-            ]);
-            if (empty($exist)) {
-                $participation = new Participation();
-                $participation->setStall($stall);
-                $participation->setSlot(3);
-                $manager->persist($participation);
             }
         }
         $manager->flush();
@@ -135,11 +92,12 @@ class ParticipationGenerator
     {
         $manager = $this->manager;
 
-        $firstSlotParticipations = $this->participationRepository->findByFirstSlot();
-        $secondSlotParticipations = $this->participationRepository->findBySecondSlot();
-        $thirdSlotParticipations = $this->participationRepository->findByThirdSlot();
-        $sittingParticipations = $this->participationRepository->findBySit();
-
+        $findVolunteers = [
+            0,
+            $this->volunteerRepository->findByFirstSlot(),
+            $this->volunteerRepository->findBySecondSlot(),
+            $this->volunteerRepository->findByThirdSlot()
+            ];
 
 /*        $slotVolunteers = $this->volunteerRepository->findBySit(); TODO finaliser les sitting priorities
         foreach ($sittingParticipations as $participation) {
@@ -147,12 +105,15 @@ class ParticipationGenerator
 
             $manager->persist($participation);
         }*/
-        $slotVolunteers = $this->volunteerRepository->findByFirstSlot();
-        foreach ($firstSlotParticipations as $participation) {
+        $participations = $this->participationRepository->findAll();
+
+
+        foreach ($participations as $participation) {
+            $slot = $participation->getSlot();
             $nbVolunteer = $participation->getStall()->getNbVolunteer();
             $count = count($participation->getVolunteers()) + 1;
             for ($i = $count; $i <= $nbVolunteer; $i++) {
-                $parent = array_shift($slotVolunteers);
+                $parent = array_shift($findVolunteers[$slot]);
                 if ($parent !== null) {
                     $participation->addVolunteers($parent);
                 }
@@ -160,33 +121,6 @@ class ParticipationGenerator
             $manager->persist($participation);
         }
 
-        $slotVolunteers = $this->volunteerRepository->findBySecondSlot();
-        foreach ($secondSlotParticipations as $participation) {
-            $nbVolunteer = $participation->getStall()->getNbVolunteer();
-            $count = count($participation->getVolunteers()) + 1;
-
-            for ($i = $count; $i <= $nbVolunteer; $i++) {
-                $parent = array_shift($slotVolunteers);
-                if ($parent !== null) {
-                    $participation->addVolunteers($parent);
-                }
-            }
-            $manager->persist($participation);
-        }
-
-        $slotVolunteers = $this->volunteerRepository->findByThirdSlot();
-        foreach ($thirdSlotParticipations as $participation) {
-            $nbVolunteer = $participation->getStall()->getNbVolunteer();
-            $count = count($participation->getVolunteers()) + 1;
-
-            for ($i = $count; $i <= $nbVolunteer; $i++) {
-                $parent = array_shift($slotVolunteers);
-                if ($parent !== null) {
-                    $participation->addVolunteers($parent);
-                }
-            }
-            $manager->persist($participation);
-        }
         $manager->flush();
     }
 
