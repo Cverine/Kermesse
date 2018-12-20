@@ -1,8 +1,23 @@
 sonata_admin:
-    title: 'Sonata Admin'
+    title: 'Back-Office ALNJ'
+    breadcrumbs:
+        child_admin_route: edit
     dashboard:
         blocks:
-            - { type: sonata.admin.block.admin_list, position: left }
+            -
+                position: left
+                class: col-lg-6 fa-folder
+                type: sonata.admin.block.admin_list
+                settings:
+                    groups: [fair]
+
+        groups:
+            fair:
+                label: Kermesse
+                items:
+                    - admin.volunteer
+                    - admin.stall
+                    - admin.participation
 
 sonata_block:
     blocks:

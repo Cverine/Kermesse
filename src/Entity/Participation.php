@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -66,7 +67,7 @@ class Participation
 
     public function __construct()
     {
-        $this->volunteers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->volunteers = new ArrayCollection();
     }
 
     /**
@@ -184,5 +185,10 @@ class Participation
                 ->atPath('volunteers')
                 ->addViolation();
         }
+    }
+
+    public function __toString()
+    {
+        return $this->stall->getName() . '-' . $this->slot;
     }
 }

@@ -12,29 +12,31 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class VolunteerAdmin extends AbstractAdmin
 {
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('identity', ['class' => 'col-md-6'])
-            ->add('name', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('phone')
+            ->with('form.group.identity', ['class' => 'col-md-6'])
+                ->add('name', TextType::class)
+                ->add('email', EmailType::class)
+                ->add('phone')
             ->end()
-            ->with('availability', ['class' => 'col-md-6'])
-            ->add('firstSlot')
-            ->add('secondSlot')
-            ->add('thirdSlot')
-            ->add('prepare')
-            ->add('tidy')
+            ->with('form.group.availability', ['class' => 'col-md-6'])
+                ->add('firstSlot')
+                ->add('secondSlot')
+                ->add('thirdSlot')
+                ->add('prepare')
+                ->add('tidy')
             ->end()
-            ->with('extra', ['class' => 'col-md-6'])
-            ->add('okSensitive')
-            ->add('isSitting')
+            ->with('form.group.extra', ['class' => 'col-md-6'])
+                ->add('okSensitive')
+                ->add('isSitting')
             ->end()
         ;
     }
@@ -67,5 +69,40 @@ class VolunteerAdmin extends AbstractAdmin
             ->add('okSensitive')
             ->add('isSitting')
             ;
+    }
+
+    protected function configureShowFields(ShowMapper $show)
+    {
+        $show
+            ->with('show.group.identity', ['class' => 'col-md-6'])
+                ->add('name')
+                ->add('email')
+                ->add('phone')
+            ->end()
+            ->with('show.group.availability', ['class' => 'col-md-6'])
+                ->add('firstSlot')
+                ->add('secondSlot')
+                ->add('thirdSlot')
+                ->add('prepare')
+                ->add('tidy')
+            ->end()
+            ->with('show.group.extra', ['class' => 'col-md-6'])
+                ->add('okSensitive')
+                ->add('isSitting')
+            ->end()
+            ->with('show.group.participations', ['class' => 'col-md-6'])
+                ->add('participations')
+            ->end()
+            ;
+    }
+
+    public function configureBatchActions($actions)
+    {
+        $actions['email'] = [
+            'label' => 'batch.action.email',
+            'ask_confirmation' => true
+        ];
+
+        return $actions;
     }
 }

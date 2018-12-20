@@ -1,9 +1,0 @@
-app:
-  name: alnj
-
-filter:
-  label_first_name: Prénom
-  label_last_name: Nom
-
-breadcrumb:
-  link_volunteer_list: coucou
