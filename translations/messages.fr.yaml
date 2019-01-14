@@ -101,6 +101,8 @@ breadcrumb:
   link_volunteer_list: Liste des volontaires
   link_stall_list: Liste des stands
   link_participation_list: Liste des affectations
+  link_participation_create: Ajouter une affectation
+
 
 batch:
   action:

@@ -12,7 +12,10 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\AdminType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -37,6 +40,13 @@ class VolunteerAdmin extends AbstractAdmin
             ->with('form.group.extra', ['class' => 'col-md-6'])
                 ->add('okSensitive')
                 ->add('isSitting')
+            ->end()
+            ->with('form.group.participations', ['class' => 'col-md-6'])
+                ->add('participations', CollectionType::class, [], [
+                        'edit' => 'inline',
+                        'inline' => 'table'
+                    ]
+                )
             ->end()
         ;
     }
@@ -68,6 +78,13 @@ class VolunteerAdmin extends AbstractAdmin
             ->add('tidy')
             ->add('okSensitive')
             ->add('isSitting')
+            ->add('_action', null, [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => [],
+                ]
+            ]);
             ;
     }
 

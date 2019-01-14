@@ -103,7 +103,7 @@ class Volunteer
     /**
      * @var Participation[]|null
      *
-     * @ORM\ManyToMany(targetEntity=Participation::class, mappedBy="volunteers")
+     * @ORM\ManyToMany(targetEntity=Participation::class, mappedBy="volunteers", cascade={"persist"})
      */
     private $participations;
 
@@ -311,9 +311,9 @@ class Volunteer
         $this->participations->removeElement($participation);
     }
 
-    public function __toString()
+    public function __toString(): ?string
     {
-        return $this->name;
+        return $this->name ?: '';
     }
 }
 

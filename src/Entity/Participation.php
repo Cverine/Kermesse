@@ -51,7 +51,7 @@ class Participation
     /**
      * @var Volunteer[]|null
      *
-     * @ORM\ManyToMany(targetEntity=Volunteer::class, inversedBy="participations")
+     * @ORM\ManyToMany(targetEntity=Volunteer::class, inversedBy="participations", cascade={"persist"})
      *
      */
     private $volunteers;
@@ -110,12 +110,19 @@ class Participation
         $this->stall = $stall;
     }
 
+
     /**
      * @return Collection|Volunteer[]|null
      */
     public function getVolunteers(): ?Collection
     {
         return $this->volunteers;
+    }
+
+
+    public function setVolunteers($volunteers): void
+    {
+        $this->volunteers = $volunteers;
     }
 
     /**
@@ -164,8 +171,7 @@ class Participation
         $exportedVolunteers = [];
         $i = 1;
         foreach ($this->getVolunteers() as $key => $volunteer) {
-            $exportedVolunteers[] = /*$i .
-                ') ' . */$volunteer->getName();
+            $exportedVolunteers[] = $volunteer->getName();
         $i++;
     }
         return $this->exportedVolunteers = join(', ', $exportedVolunteers);
@@ -187,8 +193,8 @@ class Participation
         }
     }
 
-    public function __toString()
+    public function __toString(): ?string
     {
-        return $this->stall->getName() . '-' . $this->slot;
+        return $this->getStall() . '-' . $this->slot ?: '';
     }
 }

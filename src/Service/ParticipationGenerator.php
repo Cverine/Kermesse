@@ -66,7 +66,7 @@ class ParticipationGenerator
             5 => $this->volunteerRepository->findByTidy(),
         ];
 
-        for ($i = 1; $i < 6; $i++) {
+        for ($i = 1; $i < count($buildSlot); $i++) {
             if ($buildSlot[$i] === true) {
                 $slot = $this->participationRepository->findBy([
                     'stall' => $stall,
