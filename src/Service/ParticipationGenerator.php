@@ -65,8 +65,9 @@ class ParticipationGenerator
             4 => $this->volunteerRepository->findByPrepare(),
             5 => $this->volunteerRepository->findByTidy(),
         ];
+        $count = count($buildSlot);
 
-        for ($i = 1; $i < count($buildSlot); $i++) {
+        for ($i = 1; $i < $count; $i++) {
             if ($buildSlot[$i] === true) {
                 $slot = $this->participationRepository->findBy([
                     'stall' => $stall,
@@ -93,20 +94,12 @@ class ParticipationGenerator
         $manager = $this->manager;
 
         $findVolunteers = [
-            0,
-            $this->volunteerRepository->findByFirstSlot(),
-            $this->volunteerRepository->findBySecondSlot(),
-            $this->volunteerRepository->findByThirdSlot()
+            1 => $this->volunteerRepository->findByFirstSlot(),
+            2 => $this->volunteerRepository->findBySecondSlot(),
+            3 => $this->volunteerRepository->findByThirdSlot()
             ];
 
-/*        $slotVolunteers = $this->volunteerRepository->findBySit(); TODO finaliser les sitting priorities
-        foreach ($sittingParticipations as $participation) {
-            $nbVolunteer = $participation->getStall()->getNbVolunteer();
-
-            $manager->persist($participation);
-        }*/
         $participations = $this->participationRepository->findAll();
-
 
         foreach ($participations as $participation) {
             $slot = $participation->getSlot();

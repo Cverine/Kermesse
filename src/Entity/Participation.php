@@ -49,7 +49,7 @@ class Participation
     private $slot;
 
     /**
-     * @var Volunteer[]|null
+     * @var Collection|Volunteer[]|null
      *
      * @ORM\ManyToMany(targetEntity=Volunteer::class, inversedBy="participations", cascade={"persist"})
      *
@@ -179,11 +179,10 @@ class Participation
 
     /**
      * @param ExecutionContextInterface $context
-     * @param $payload
      *
      * @Assert\Callback
      */
-    public function validate(ExecutionContextInterface $context, $payload)
+    public function validate(ExecutionContextInterface $context)
     {
         $nbVolunteers = $this->getStall()->getNbVolunteer();
         if (count($this->getVolunteers()) > $nbVolunteers ) {
