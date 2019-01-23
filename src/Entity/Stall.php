@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -107,8 +106,6 @@ class Stall
     private $isSitting;
 
     /**
-     * @var Collection|Participation[]|null
-     *
      * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="stall")
      */
     private $participations;
@@ -177,7 +174,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isFirstSlot(): ?bool
+    public function isFirstSlot(): bool
     {
         return $this->firstSlot;
     }
@@ -185,7 +182,7 @@ class Stall
     /**
      * @param bool $firstSlot
      */
-    public function setFirstSlot(?bool $firstSlot): void
+    public function setFirstSlot(bool $firstSlot): void
     {
         $this->firstSlot = $firstSlot;
     }
@@ -193,7 +190,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isSecondSlot(): ?bool
+    public function isSecondSlot(): bool
     {
         return $this->secondSlot;
     }
@@ -201,7 +198,7 @@ class Stall
     /**
      * @param bool $secondSlot
      */
-    public function setSecondSlot(?bool $secondSlot): void
+    public function setSecondSlot(bool $secondSlot): void
     {
         $this->secondSlot = $secondSlot;
     }
@@ -209,7 +206,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isThirdSlot(): ?bool
+    public function isThirdSlot(): bool
     {
         return $this->thirdSlot;
     }
@@ -217,7 +214,7 @@ class Stall
     /**
      * @param bool $thirdSlot
      */
-    public function setThirdSlot(?bool $thirdSlot): void
+    public function setThirdSlot(bool $thirdSlot): void
     {
         $this->thirdSlot = $thirdSlot;
     }
@@ -225,7 +222,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isPrepare(): ?bool
+    public function isPrepare(): bool
     {
         return $this->prepare;
     }
@@ -233,7 +230,7 @@ class Stall
     /**
      * @param bool $prepare
      */
-    public function setPrepare(?bool $prepare): void
+    public function setPrepare(bool $prepare): void
     {
         $this->prepare = $prepare;
     }
@@ -241,7 +238,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isTidy(): ?bool
+    public function isTidy(): bool
     {
         return $this->tidy;
     }
@@ -249,7 +246,7 @@ class Stall
     /**
      * @param bool $tidy
      */
-    public function setTidy(?bool $tidy): void
+    public function setTidy(bool $tidy): void
     {
         $this->tidy = $tidy;
     }
@@ -257,7 +254,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isSensitive(): ?bool
+    public function isSensitive(): bool
     {
         return $this->isSensitive;
     }
@@ -265,7 +262,7 @@ class Stall
     /**
      * @param bool $isSensitive
      */
-    public function setIsSensitive(?bool $isSensitive): void
+    public function setIsSensitive(bool $isSensitive): void
     {
         $this->isSensitive = $isSensitive;
     }
@@ -273,7 +270,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isSitting(): ?bool
+    public function isSitting(): bool
     {
         return $this->isSitting;
     }
@@ -281,23 +278,21 @@ class Stall
     /**
      * @param bool $isSitting
      */
-    public function setIsSitting(?bool $isSitting): void
+    public function setIsSitting(bool $isSitting): void
     {
         $this->isSitting = $isSitting;
     }
 
-    /**
-     * @return Collection|Participation[]|null
-     */
-    public function getParticipations(): ?Participation
+
+    public function getParticipations()
     {
         return $this->participations;
     }
 
     /**
-     * @param Participation|null $participations
+     * @param mixed $participations
      */
-    public function setParticipations(?Participation $participations): void
+    public function setParticipations($participations): void
     {
         $this->participations = $participations;
     }

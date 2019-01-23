@@ -9,6 +9,7 @@
 namespace App\Service;
 
 use App\Entity\Participation;
+use App\Entity\Stall;
 use App\Repository\ParticipationRepository;
 use App\Repository\StallRepository;
 use App\Repository\VolunteerRepository;
@@ -48,7 +49,7 @@ class ParticipationGenerator
     }
 
     /**
-     * @param $stall
+     * @param Stall $stall
      */
     public function initializeParticipations($stall)
     {

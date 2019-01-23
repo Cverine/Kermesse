@@ -41,9 +41,9 @@ class Participation
     private $id;
 
     /**
-     * @var string|null
+     * @var int|null
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      *
      */
     private $slot;
@@ -79,17 +79,17 @@ class Participation
     }
 
     /**
-     * @return null|string
+     * @return null|integer
      */
-    public function getSlot(): ?string
+    public function getSlot()
     {
         return $this->slot;
     }
 
     /**
-     * @param null|string $slot
+     * @param null|int $slot
      */
-    public function setSlot(?string $slot): void
+    public function setSlot(?int $slot): void
     {
         $this->slot = $slot;
     }

@@ -19,7 +19,6 @@ class StallAdminController extends BaseController
 
     /**
      * @param ProxyQueryInterface $selectedModelQuery
-     * @param Request|null $request
      *
      * @return RedirectResponse
      */
