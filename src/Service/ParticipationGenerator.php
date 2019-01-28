@@ -93,8 +93,12 @@ class ParticipationGenerator
     public function dispatchVolunteers()
     {
         $manager = $this->manager;
-        $findVolunteers = [];
-
+        $findVolunteers = [
+            0,
+            array_diff($this->volunteerRepository->findByFirstSlot(), $this->volunteerRepository->findByParticipation(1)),
+            array_diff($this->volunteerRepository->findBySecondSlot(), $this->volunteerRepository->findByParticipation(2)),
+            array_diff($this->volunteerRepository->findByThirdSlot(), $this->volunteerRepository->findByParticipation(3)),
+        ];
         $participations = $this->participationRepository->findAll();
 
         foreach ($participations as $participation) {
