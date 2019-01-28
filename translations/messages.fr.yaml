@@ -67,12 +67,14 @@ form:
   label_stall: Stand
   label_volunteers: Volontaires
   label_slot: Créneau
+  label_participations: Gérer les affectations
   group:
     identity: Identité
     availability: Disponibilités
     extra: Infos complémentaires
     general_info: Informations générales
     schedule: Créneaux
+    participations: Affectations
 
 show:
   label_id: Id

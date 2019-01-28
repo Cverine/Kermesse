@@ -91,22 +91,13 @@ class ParticipationGenerator
     public function dispatchVolunteers()
     {
         $manager = $this->manager;
-
         $findVolunteers = [
             0,
-            $this->volunteerRepository->findByFirstSlot(),
-            $this->volunteerRepository->findBySecondSlot(),
-            $this->volunteerRepository->findByThirdSlot()
-            ];
-
-/*        $slotVolunteers = $this->volunteerRepository->findBySit(); TODO finaliser les sitting priorities
-        foreach ($sittingParticipations as $participation) {
-            $nbVolunteer = $participation->getStall()->getNbVolunteer();
-
-            $manager->persist($participation);
-        }*/
+            array_diff($this->volunteerRepository->findByFirstSlot(), $this->volunteerRepository->findByParticipation(1)),
+            array_diff($this->volunteerRepository->findBySecondSlot(), $this->volunteerRepository->findByParticipation(2)),
+            array_diff($this->volunteerRepository->findByThirdSlot(), $this->volunteerRepository->findByParticipation(3)),
+        ];
         $participations = $this->participationRepository->findAll();
-
 
         foreach ($participations as $participation) {
             $slot = $participation->getSlot();
@@ -123,5 +114,4 @@ class ParticipationGenerator
 
         $manager->flush();
     }
-
 }

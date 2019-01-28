@@ -84,4 +84,15 @@ class VolunteerRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findByParticipation($slot)
+    {
+        return $this->createQueryBuilder('v')
+            ->join('v.participations', 'p')
+            ->where('p.slot = :slot')
+            ->setParameter('slot', $slot)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

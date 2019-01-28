@@ -43,6 +43,6 @@ class VolunteerAdminController extends BaseController
             $this->emailService->sendEmail($message);
 
         }
-        return new RedirectResponse($this->generateUrl('admin_app_participation_list'));
+        return new RedirectResponse($this->generateUrl('admin_app_volunteer_list'));
     }
 }
