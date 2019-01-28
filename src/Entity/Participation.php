@@ -41,15 +41,15 @@ class Participation
     private $id;
 
     /**
-     * @var string|null
+     * @var int|null
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      *
      */
     private $slot;
 
     /**
-     * @var Volunteer[]|null
+     * @var Collection|Volunteer[]|null
      *
      * @ORM\ManyToMany(targetEntity=Volunteer::class, inversedBy="participations", cascade={"persist"})
      *
@@ -79,17 +79,17 @@ class Participation
     }
 
     /**
-     * @return null|string
+     * @return null|integer
      */
-    public function getSlot(): ?string
+    public function getSlot()
     {
         return $this->slot;
     }
 
     /**
-     * @param null|string $slot
+     * @param null|int $slot
      */
-    public function setSlot(?string $slot): void
+    public function setSlot(?int $slot): void
     {
         $this->slot = $slot;
     }
@@ -179,11 +179,10 @@ class Participation
 
     /**
      * @param ExecutionContextInterface $context
-     * @param $payload
      *
      * @Assert\Callback
      */
-    public function validate(ExecutionContextInterface $context, $payload)
+    public function validate(ExecutionContextInterface $context)
     {
         $nbVolunteers = $this->getStall()->getNbVolunteer();
         if (count($this->getVolunteers()) > $nbVolunteers ) {

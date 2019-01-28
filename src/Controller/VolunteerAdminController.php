@@ -26,10 +26,10 @@ class VolunteerAdminController extends BaseController
 
     /**
      * @param ProxyQueryInterface $selectedModelQuery
-     * @param Request|null $request
+     *
      * @return RedirectResponse
      */
-    public function batchActionEmail(ProxyQueryInterface $selectedModelQuery, Request $request = null)
+    public function batchActionEmail(ProxyQueryInterface $selectedModelQuery)
     {
         $volunteers = $selectedModelQuery->execute();
 

@@ -19,11 +19,10 @@ class StallAdminController extends BaseController
 
     /**
      * @param ProxyQueryInterface $selectedModelQuery
-     * @param Request|null $request
      *
      * @return RedirectResponse
      */
-    public function batchActionMatch(ProxyQueryInterface $selectedModelQuery, Request $request = null)
+    public function batchActionMatch(ProxyQueryInterface $selectedModelQuery)
     {
         $stalls = $selectedModelQuery->execute();
         $generator = $this->generator;

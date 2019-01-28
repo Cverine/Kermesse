@@ -101,7 +101,7 @@ class Volunteer
     private $isSitting;
 
     /**
-     * @var Participation[]|null
+     * @var Collection|Participation[]|null
      *
      * @ORM\ManyToMany(targetEntity=Participation::class, mappedBy="volunteers", cascade={"persist"})
      */

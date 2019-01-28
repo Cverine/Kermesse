@@ -9,6 +9,7 @@
 namespace App\Service;
 
 use App\Entity\Participation;
+use App\Entity\Stall;
 use App\Repository\ParticipationRepository;
 use App\Repository\StallRepository;
 use App\Repository\VolunteerRepository;
@@ -48,7 +49,7 @@ class ParticipationGenerator
     }
 
     /**
-     * @param $stall
+     * @param Stall $stall
      */
     public function initializeParticipations($stall)
     {
@@ -65,8 +66,9 @@ class ParticipationGenerator
             4 => $this->volunteerRepository->findByPrepare(),
             5 => $this->volunteerRepository->findByTidy(),
         ];
+        $count = count($buildSlot);
 
-        for ($i = 1; $i < count($buildSlot); $i++) {
+        for ($i = 1; $i < $count; $i++) {
             if ($buildSlot[$i] === true) {
                 $slot = $this->participationRepository->findBy([
                     'stall' => $stall,
@@ -91,12 +93,8 @@ class ParticipationGenerator
     public function dispatchVolunteers()
     {
         $manager = $this->manager;
-        $findVolunteers = [
-            0,
-            array_diff($this->volunteerRepository->findByFirstSlot(), $this->volunteerRepository->findByParticipation(1)),
-            array_diff($this->volunteerRepository->findBySecondSlot(), $this->volunteerRepository->findByParticipation(2)),
-            array_diff($this->volunteerRepository->findByThirdSlot(), $this->volunteerRepository->findByParticipation(3)),
-        ];
+        $findVolunteers = [];
+
         $participations = $this->participationRepository->findAll();
 
         foreach ($participations as $participation) {
