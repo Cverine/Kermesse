@@ -83,4 +83,15 @@ class ParticipationRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findByMainSlots()
+    {
+        return $this->createQueryBuilder('participation')
+            ->where('participation.slot = 1')
+            ->orWhere('participation.slot = 2')
+            ->orWhere('participation.slot = 3')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

@@ -174,7 +174,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isFirstSlot(): bool
+    public function isFirstSlot(): ?bool
     {
         return $this->firstSlot;
     }
@@ -190,7 +190,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isSecondSlot(): bool
+    public function isSecondSlot(): ?bool
     {
         return $this->secondSlot;
     }
@@ -206,7 +206,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isThirdSlot(): bool
+    public function isThirdSlot(): ?bool
     {
         return $this->thirdSlot;
     }
@@ -222,7 +222,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isPrepare(): bool
+    public function isPrepare(): ?bool
     {
         return $this->prepare;
     }
@@ -238,7 +238,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isTidy(): bool
+    public function isTidy(): ?bool
     {
         return $this->tidy;
     }
@@ -254,7 +254,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isSensitive(): bool
+    public function isSensitive(): ?bool
     {
         return $this->isSensitive;
     }
@@ -270,7 +270,7 @@ class Stall
     /**
      * @return bool
      */
-    public function isSitting(): bool
+    public function isSitting(): ?bool
     {
         return $this->isSitting;
     }
