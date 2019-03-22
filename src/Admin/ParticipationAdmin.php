@@ -58,6 +58,7 @@ class ParticipationAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list)
     {
         $list
+            ->add('manual')
             ->add('volunteers')
             ->add('stall')
             ->add('slot')
@@ -88,6 +89,7 @@ class ParticipationAdmin extends AbstractAdmin
             ->add('stall', null, ['show_filter' =>true])
             ->add('volunteers', null, ['show_filter' =>true])
             ->add('slot', null, ['show_filter' =>true])
+            ->add('manual', null, ['show_filter' =>true])
         ;
     }
 

@@ -76,6 +76,7 @@ class ParticipationGenerator
                 ]);
                 if (empty($slot)) {
                     $participation = new Participation();
+                    $participation->setManual(false);
                     $participation->setStall($stall);
                     $participation->setSlot(self::SLOTS[$i]);
                     if ($i === 4 || $i === 5 ) {

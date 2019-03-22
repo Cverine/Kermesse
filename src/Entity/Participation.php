@@ -63,6 +63,13 @@ class Participation
      */
     private $stall;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", options={"default" : true})
+     */
+    private $manual = true;
+
     protected $exportedVolunteers;
 
     public function __construct()
@@ -146,6 +153,22 @@ class Participation
             return;
         }
         $this->volunteers->removeElement($volunteer);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isManual(): bool
+    {
+        return $this->manual;
+    }
+
+    /**
+     * @param bool $manual
+     */
+    public function setManual(bool $manual): void
+    {
+        $this->manual = $manual;
     }
 
     /**

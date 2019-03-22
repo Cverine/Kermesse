@@ -3,13 +3,22 @@
 namespace App\DataFixtures;
 
 use App\Entity\Stall;
+use App\Entity\User;
 use App\Entity\Volunteer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -17,6 +26,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 40; $i ++) {
             $volunteer = new Volunteer();
             $volunteer->setName($faker->firstName . ' ' . $faker->lastName);
+            $volunteer->setEmail($faker->email);
             $volunteer->setPrepare($faker->boolean);
             $volunteer->setOkSensitive($faker->boolean(2));
             $volunteer->setIsSitting($faker->boolean(10));
@@ -40,6 +50,12 @@ class AppFixtures extends Fixture
             $stall->setTidy(false);
             $manager->persist($stall);
         }
+
+        $user = new User();
+        $user->setEmail("severinelab@protonmail.com");
+        $user->setPassword($this->passwordEncoder->encodePassword($user, 'grogro42'));
+        $user->addRole("ROLE_ADMIN");
+        $manager->persist($user);
 
         $manager->flush();
     }

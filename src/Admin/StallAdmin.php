@@ -14,6 +14,8 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class StallAdmin extends AbstractAdmin
@@ -36,6 +38,12 @@ class StallAdmin extends AbstractAdmin
                     2 => 2,
                     3 => 3,
                     4 => 4,
+                    5 => 5,
+                    6 => 6,
+                    7 => 7,
+                    8 => 8,
+                    9 => 9,
+                    10 => 10,
                     100 => 100
                 ]
             ])
@@ -51,6 +59,13 @@ class StallAdmin extends AbstractAdmin
             ->add('isSensitive')
             ->add('isSitting')
             ->end()
+            ->with('form.group.participations', ['class' => 'col-md-6'])
+            ->add('participations', CollectionType::class, [], [
+                    'edit' => 'inline',
+                    'inline' => 'table'
+                ]
+            )
+            ->end()
         ;
     }
 
@@ -58,7 +73,12 @@ class StallAdmin extends AbstractAdmin
     {
         $filter
             ->add('name', null, ['show_filter' =>true])
-            ->add('grade', null, ['show_filter' =>true])
+            ->add('grade', null, ['show_filter' =>true ], ChoiceType::class, [
+                'choices' => [
+                    'Maternelle' => Stall::GRADE_MATERNELLE,
+                    'Primaire' => Stall::GRADE_PRIMAIRE
+                ]
+            ])
             ->add('firstSlot', null , ['show_filter' =>true])
             ->add('secondSlot', null, ['show_filter' =>true])
             ->add('thirdSlot', null, ['show_filter' =>true])
@@ -75,7 +95,9 @@ class StallAdmin extends AbstractAdmin
             ->addIdentifier('id')
             ->addIdentifier('name')
             ->add('grade')
-            ->add('nbVolunteer')
+            ->add('nbVolunteer', 'text', [
+                'row_align' => 'left'
+            ])
             ->add('firstSlot')
             ->add('secondSlot')
             ->add('thirdSlot')
@@ -83,6 +105,12 @@ class StallAdmin extends AbstractAdmin
             ->add('tidy')
             ->add('isSensitive')
             ->add('isSitting')
+            ->add('_action', null, [
+                'actions' => [
+                    'edit' => [],
+                    'delete' => [],
+                ]
+            ]);
         ;
     }
 

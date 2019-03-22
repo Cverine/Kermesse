@@ -1,5 +1,7 @@
 sonata_admin:
     title: 'Back-Office ALNJ'
+    templates:
+        list: 'admin/list.html.twig'
     breadcrumbs:
         child_admin_route: edit
     dashboard:

@@ -30,8 +30,8 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    # Admin Extensions
-#    App\Admin\Extension\ActionsExtension:
+    # admin Extensions
+#    App\admin\Extension\ActionsExtension:
 #        public: true
 #        tags:
 #        - { name: sonata.admin.extension, global: true }
@@ -56,3 +56,5 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Participation, label_translator_strategy: sonata.admin.label.strategy.underscore }
         public: true
+
+

@@ -1,6 +1,15 @@
 app:
   name: alnj
 
+title:
+  login: Connexion
+
+label:
+  username: Identifiant
+  password: Mot de passe
+
+action:
+  sign_in: Se connecter
 admin:
   group:
     fair: Kermesse
@@ -28,9 +37,12 @@ filter:
   label_stall: Stand
   label_volunteers: Volontaire
   label_slot: Créneau
+  label_manual: Création manuelle
+  label_participations: Montrer les parents sans affectation
 
 list:
   label_id: Id
+  label_manual: Création manuelle
   label_name: Nom
   label_email: Email
   label_phone: Téléphone
@@ -93,18 +105,23 @@ show:
   label_is_sensitive: Sensible ok
   label_is_sitting: Assis
   label_participations: Affectation(s)
+  label_grade: Niveau
+  label_nb_volunteer: Nbre de volontaires
   group:
     identity: Identité
     availability: Disponibilités
     extra: Infos complémentaires
     participations: Affectation(s)
+    general_info: Informations générales
+    schedule: Créneaux
 
 breadcrumb:
   link_volunteer_list: Liste des volontaires
+  link_volunteer_create: Ajouter un volontaire
   link_stall_list: Liste des stands
+  link_stall_create: Ajouter un stand
   link_participation_list: Liste des affectations
   link_participation_create: Ajouter une affectation
-
 
 batch:
   action:

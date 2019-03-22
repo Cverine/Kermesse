@@ -14,13 +14,6 @@ class Stall
     const GRADE_MATERNELLE = 1;
     const GRADE_PRIMAIRE = 2;
 
-    const SLOT1 = "First slot";
-    const SLOT2 = "Second slot";
-    const SLOT3 = "Third slot";
-    const SLOT4 = "Prepare slot";
-    const SLOT5 = "Tidy slot";
-
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -38,7 +31,7 @@ class Stall
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", length=255, nullable=true, options={"default" : "GRADE_PRIMAIRE"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $grade;
 

@@ -5,13 +5,23 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"name", "email"},
+ *     errorPath="name",
+ *     message="Ce volontaire existe déjà."
+ * )
  */
 class Volunteer
 {
+    const GRADE_MATERNELLE = "Maternelle";
+    const GRADE_PRIMAIRE = "Primaire";
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -34,10 +44,11 @@ class Volunteer
     private $name;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
+     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
@@ -50,6 +61,13 @@ class Volunteer
      * @Assert\Length(min=10, max=10)
      */
     private $phone;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $grade;
 
     /**
      * @var boolean
@@ -137,9 +155,9 @@ class Volunteer
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -166,6 +184,22 @@ class Volunteer
     public function setPhone(string $phone): void
     {
         $this->phone = $phone;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGrade(): ?string
+    {
+        return $this->grade;
+    }
+
+    /**
+     * @param string|null $grade
+     */
+    public function setGrade(?string $grade): void
+    {
+        $this->grade = $grade;
     }
 
     /**

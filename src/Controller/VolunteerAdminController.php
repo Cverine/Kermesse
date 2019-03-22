@@ -40,9 +40,14 @@ class VolunteerAdminController extends BaseController
                 'to' => $volunteer->getEmail()
             ];
 
-            $this->emailService->sendEmail($message);
-
+            $this->emailService->sendParticipationEmail($message);
         }
+
+        $this->addFlash(
+            'notice',
+            'Les emails ont bien été envoyés !!'
+        );
+
         return new RedirectResponse($this->generateUrl('admin_app_volunteer_list'));
     }
 }
