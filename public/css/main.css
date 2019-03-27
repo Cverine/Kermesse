@@ -52,7 +52,7 @@ input:active {
     margin-top: 15px;
 }
 
-#inputPassword {
+#inputPassword, #inputEmail {
     width: 500px;
     margin-top: 10px;
 }

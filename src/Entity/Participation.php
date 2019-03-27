@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(
  *     fields={"slot", "stall"},
  *     errorPath="slot",
- *     message="Ce créneau existe déjà pour ce stand"
+ *     message="Ce créneau existe déjà pour ce stand. Pour ajouter un parent sur ce créneau retournez à la liste et choisissez l'option Editer"
  * )
 
  */
@@ -208,12 +208,55 @@ class Participation
     public function validate(ExecutionContextInterface $context)
     {
         $nbVolunteers = $this->getStall()->getNbVolunteer();
-        if (count($this->getVolunteers()) > $nbVolunteers ) {
-            $context->buildViolation('Le nombre de volontaires dépasse le nombre prévu ( ' . $nbVolunteers . ' )' )
+        if (count($this->getVolunteers()) > $nbVolunteers) {
+            $context->buildViolation('Le nombre de volontaires dépasse le nombre prévu ( ' . $nbVolunteers . ' )')
                 ->atPath('volunteers')
                 ->addViolation();
         }
+        foreach ($this->getVolunteers() as $volunteer) {
+            if ($this->getSlot() === 1 && $volunteer->isFirstSlot() !== true  ) {
+                $context->buildViolation( $volunteer . ' n\'a pas choisi ce créneau')
+                    ->atPath('volunteers')
+                    ->addViolation();
+            }
+            $chosenSlot = $volunteer->getParticipations()->filter(function (Participation $participation) {
+                return $participation->getSlot() === 1;
+            });
+            if ($this->getSlot() === 1 && !empty($chosenSlot)) {
+                $context->buildViolation( $volunteer . ' est déjà affecté(e) sur le créneau 1')
+                    ->atPath('volunteers')
+                    ->addViolation();
+            }
+
+            if ($this->getSlot() === 2 && $volunteer->isSecondSlot() !== true ) {
+                $context->buildViolation( $volunteer . ' n\'a pas choisi ce créneau')
+                    ->atPath('volunteers')
+                    ->addViolation();
+            }
+            $chosenSlot = $volunteer->getParticipations()->filter(function (Participation $participation) {
+                return $participation->getSlot() === 2;
+            });
+            if ($this->getSlot() === 2 && !empty($chosenSlot)) {
+                $context->buildViolation( $volunteer . ' est déjà affecté(e) sur le créneau 2')
+                    ->atPath('volunteers')
+                    ->addViolation();
+            }
+            if ($this->getSlot() === 3 && $volunteer->isThirdSlot() !== true ) {
+                $context->buildViolation( $volunteer . ' n\'a pas choisi ce créneau')
+                    ->atPath('volunteers')
+                    ->addViolation();
+            }
+            $chosenSlot = $volunteer->getParticipations()->filter(function (Participation $participation) {
+                return $participation->getSlot() === 3;
+            });
+            if ($this->getSlot() === 3 && !empty($chosenSlot)) {
+                $context->buildViolation( $volunteer . ' est déjà affecté(e) sur le créneau 3')
+                    ->atPath('volunteers')
+                    ->addViolation();
+            }
+        }
     }
+
 
     public function __toString(): ?string
     {
