@@ -57,6 +57,19 @@ input:active {
     margin-top: 10px;
 }
 
+.logout {
+    background-color: rgb(55, 72, 80);
+    width: 100%;
+    height: 30px;
+    border: none;
+    margin-top: 100px;
+    text-align: left;
+}
+
+.logout a:hover {
+    color: white !important;
+}
+
 
 
 
