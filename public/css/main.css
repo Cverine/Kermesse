@@ -28,16 +28,7 @@ body {
     margin-right: 5px;
 }
 
-input {
-    height: 40px;
-    border: none !important;
-}
-
-input:active {
-    border: none !important;
-}
-
-.button {
+.security-button {
     width: 30%;
     height: 40px;
     margin-left: 35%;
@@ -55,6 +46,12 @@ input:active {
 #inputPassword, #inputEmail {
     width: 500px;
     margin-top: 10px;
+    height: 40px;
+    border: none !important;
+}
+
+#inputPassword:active, #inputEmail:active {
+    border: none !important;
 }
 
 .logout {
