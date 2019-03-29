@@ -61,6 +61,7 @@ list:
   label_slot: Créneau
   label_missing_volunteers: Volontaires manquants
   label__action: Actions
+  label_participations: Affectations
 
 form:
   label_name: Nom

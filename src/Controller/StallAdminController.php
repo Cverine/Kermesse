@@ -26,12 +26,14 @@ class StallAdminController extends BaseController
     {
         $stalls = $selectedModelQuery->execute();
         $generator = $this->generator;
-
+//dump($stalls);die;
         foreach ($stalls as $stall) {
-            $generator->initializeParticipations($stall);
-            $generator->dispatchVolunteers();
-        }
 
+            $generator->initializeParticipations($stall);
+
+        }
+        $generator->dispatchSittingVolunteers();
+        $generator->dispatchVolunteers();
         return new RedirectResponse($this->generateUrl('admin_app_participation_list'));
     }
 }

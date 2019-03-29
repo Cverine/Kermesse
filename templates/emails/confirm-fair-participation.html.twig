@@ -1,9 +1,13 @@
 <h3>Bonjour {{ name }}</h3>
 
 <p>Vous vous êtes porté volontaire pour tenir un ou plusieurs stands lors de la kermesse.</p>
-<p>Voici stands sur lesquels vous êtes affecté :</p>
+<p>Voici les stands sur lesquels vous êtes affecté :</p>
 <ul>
     {% for participation in participations %}
-        <li>{{ participation }}</li>
+        <li>Stand : {{ participation.stall }}
+                {% if participation.slot  is same as (1) %} de 14 heures à 15 heures
+                {% elseif  participation.slot  is same as (2) %} de 15 heures à 16 heures
+                {% elseif  participation.slot  is same as (3) %} de 16 heures à 17 heures {% endif %}
+                </li>
     {% endfor %}
 </ul>

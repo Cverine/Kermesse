@@ -77,7 +77,7 @@ class ParticipationRepository extends ServiceEntityRepository
     public function findBySit()
     {
         return $this->createQueryBuilder('participation')
-            ->join('participation.stall', 'stall')
+            ->leftJoin('participation.stall', 'stall')
             ->where('stall.isSitting = true')
             ->getQuery()
             ->getResult()

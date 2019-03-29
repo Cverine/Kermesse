@@ -76,10 +76,31 @@ class VolunteerRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findBySit()
+    public function findBySitFirstSlot()
     {
         return $this->createQueryBuilder('volunteer')
             ->where('volunteer.isSitting = true')
+            ->andWhere('volunteer.firstSlot = true')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findBySitSecondSlot()
+    {
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.isSitting = true')
+            ->andWhere('volunteer.secondSlot = true')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findBySitThirdSlot()
+    {
+        return $this->createQueryBuilder('volunteer')
+            ->where('volunteer.isSitting = true')
+            ->andWhere('volunteer.thirdSlot = true')
             ->getQuery()
             ->getResult()
             ;

@@ -9,7 +9,9 @@
 namespace App\Admin;
 
 
+use App\Entity\Participation;
 use App\Entity\Stall;
+use App\Entity\Volunteer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -101,16 +103,16 @@ class StallAdmin extends AbstractAdmin
             ->add('firstSlot')
             ->add('secondSlot')
             ->add('thirdSlot')
-            ->add('prepare')
-            ->add('tidy')
-            ->add('isSensitive')
+//            ->add('prepare')
+//            ->add('tidy')
+//            ->add('isSensitive')
             ->add('isSitting')
             ->add('_action', null, [
                 'actions' => [
                     'edit' => [],
                     'delete' => [],
                 ]
-            ]);
+            ])
         ;
     }
 

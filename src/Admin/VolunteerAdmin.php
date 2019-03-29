@@ -31,6 +31,9 @@ class VolunteerAdmin extends AbstractAdmin
                 ->add('name', TextType::class)
                 ->add('email', EmailType::class)
                 ->add('phone')
+                ->setHelps([
+                    'phone' => 'Format: 0X12345678'
+                ])
             ->end()
             ->with('form.group.availability', ['class' => 'col-md-6'])
                 ->add('firstSlot')
@@ -92,13 +95,9 @@ class VolunteerAdmin extends AbstractAdmin
         $queryBuilder
             ->leftJoin($alias. '.participations', 'p')
             ->andWhere($queryBuilder->expr()->isNull('p'))
-
         ;
 
         return true;
-
-
-//        >where($qb->expr()->isNull('a.vertical_id'));
     }
 
     protected function configureListFields(ListMapper $list)
@@ -106,15 +105,15 @@ class VolunteerAdmin extends AbstractAdmin
         $list
             ->addIdentifier('name')
             ->add('email')
-            ->add('phone')
             ->add('grade')
             ->add('firstSlot')
             ->add('secondSlot')
             ->add('thirdSlot')
             ->add('prepare')
             ->add('tidy')
-            ->add('okSensitive')
+//            ->add('okSensitive')
             ->add('isSitting')
+            ->add('participations')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],

@@ -92,7 +92,7 @@ class ParticipationAdmin extends AbstractAdmin
             ->add('volunteers', null, ['show_filter' =>true])
             ->add('slot', null, ['show_filter' =>true])
             ->add('manual', null, ['show_filter' =>true])
-        ;
+            ;
     }
 
     public function getExportFields()
@@ -133,12 +133,12 @@ class ParticipationAdmin extends AbstractAdmin
                     ->addViolation($volunteer . ' n\'a pas choisi ce créneau')
                     ->end();
             }
-
             if ($this->isCurrentRoute('edit') === false) {
                 $chosenSlot = $volunteer->getParticipations()->filter(function (Participation $participation) {
                     return $participation->getSlot() === 1;
                 });
-                if ($object->getSlot() === 1 && !empty($chosenSlot)) {
+
+                if ($object->getSlot() === 1 && $chosenSlot->count() != 0) {
                     $errorElement
                         ->with('volunteer')
                         ->addViolation($volunteer . ' est déjà affecté(e) sur le créneau 1')
@@ -148,7 +148,7 @@ class ParticipationAdmin extends AbstractAdmin
                 $chosenSlot = $volunteer->getParticipations()->filter(function (Participation $participation) {
                     return $participation->getSlot() === 2;
                 });
-                if ($object->getSlot() === 2 && !empty($chosenSlot)) {
+                if ($object->getSlot() === 2 && $chosenSlot->count() != 0) {
                     $errorElement
                         ->with('volunteer')
                         ->addViolation($volunteer . ' est déjà affecté(e) sur le créneau 2')
@@ -157,7 +157,7 @@ class ParticipationAdmin extends AbstractAdmin
                 $chosenSlot = $volunteer->getParticipations()->filter(function (Participation $participation) {
                     return $participation->getSlot() === 3;
                 });
-                if ($object->getSlot() === 3 && !empty($chosenSlot)) {
+                if ($object->getSlot() === 3 && $chosenSlot->count() != 0) {
                     $errorElement
                         ->with('volunteer')
                         ->addViolation($volunteer . ' est déjà affecté(e) sur le créneau 3')
