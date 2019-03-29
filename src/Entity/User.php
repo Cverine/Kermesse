@@ -29,7 +29,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", unique=true, nullable=false)
+     * @ORM\Column(type="string", length=128, unique=true, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -58,7 +58,7 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $resetToken;
 
