@@ -77,7 +77,7 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -101,7 +101,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         if (empty($roles)) {
-            $roles[] = self::ROLE_USER;
+            $roles[] = self::ROLE_ADMIN;
         }
 
         return array_unique($roles);
@@ -148,7 +148,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
