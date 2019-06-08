@@ -94,18 +94,19 @@ class StallAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list)
     {
         $list
-            ->addIdentifier('id')
             ->addIdentifier('name')
-            ->add('grade')
+            ->add('grade', 'choice', [
+                'choices'   => [
+                    1 => "Maternelle",
+                    2 => "Elémentaire"
+                ]
+            ])
             ->add('nbVolunteer', 'text', [
                 'row_align' => 'left'
             ])
             ->add('firstSlot')
             ->add('secondSlot')
             ->add('thirdSlot')
-//            ->add('prepare')
-//            ->add('tidy')
-//            ->add('isSensitive')
             ->add('isSitting')
             ->add('_action', null, [
                 'actions' => [

@@ -26,11 +26,9 @@ class StallAdminController extends BaseController
     {
         $stalls = $selectedModelQuery->execute();
         $generator = $this->generator;
-//dump($stalls);die;
+
         foreach ($stalls as $stall) {
-
             $generator->initializeParticipations($stall);
-
         }
         $generator->dispatchSittingVolunteers();
         $generator->dispatchVolunteers();

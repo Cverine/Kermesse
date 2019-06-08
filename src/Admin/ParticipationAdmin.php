@@ -30,6 +30,9 @@ class ParticipationAdmin extends AbstractAdmin
     const SLOT4 = 4;
     const SLOT5 = 5;
 
+    protected $datagridValues = [
+        '_sort_by' => 'stall'
+    ];
 
     protected function configureFormFields(FormMapper $formMapper)
     {

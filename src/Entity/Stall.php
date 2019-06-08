@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Stall
 {
-    const GRADE_MATERNELLE = 1;
-    const GRADE_PRIMAIRE = 2;
+    const GRADE_MATERNELLE = "Maternelle";
+    const GRADE_PRIMAIRE = "Elémentaire";
 
     /**
      * @ORM\Id()

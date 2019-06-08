@@ -111,7 +111,6 @@ class VolunteerAdmin extends AbstractAdmin
             ->add('thirdSlot')
             ->add('prepare')
             ->add('tidy')
-//            ->add('okSensitive')
             ->add('isSitting')
             ->add('participations')
             ->add('_action', null, [
