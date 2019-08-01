@@ -11,13 +11,12 @@ namespace App\Admin;
 
 use App\Entity\Participation;
 use App\Entity\Stall;
-use App\Entity\Volunteer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\CollectionType;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class StallAdmin extends AbstractAdmin
@@ -115,6 +114,23 @@ class StallAdmin extends AbstractAdmin
                 ]
             ])
         ;
+    }
+
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        foreach ($object->getParticipations() as $participation) {
+            $existingParticipation = $this->modelManager->findBy(Participation::class, [
+                'stall' => $participation->getStall(),
+                'slot' => $participation->getSlot()
+            ]);
+            if (!empty($existingParticipation)) {
+                $errorElement
+                    ->with('participations')
+                    ->addViolation('Il existe déjà des affectations sur le stand ' . $participation->getStall() . ' et le créneau '
+                        . $participation->getSlot() . '. Pour y ajouter une affectation, vous devez passer par la page Affectations.')
+                    ->end();
+            }
+        }
     }
 
     protected function configureBatchActions($actions)

@@ -168,8 +168,5 @@ class ParticipationAdmin extends AbstractAdmin
                 }
             }
         }
-
-
-        parent::validate($errorElement, $object);
     }
 }
