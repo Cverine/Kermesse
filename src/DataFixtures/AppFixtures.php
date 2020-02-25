@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for ($i = 0; $i < 40; $i ++) {
+        for ($i = 0; $i < 10; $i ++) {
             $volunteer = new Volunteer();
             $volunteer->setName($faker->firstName . ' ' . $faker->lastName);
             $volunteer->setEmail($faker->email);
@@ -39,16 +39,16 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 20; $i ++) {
             $stall = new Stall();
-            $stall->setName($faker->jobTitle);
-            $stall->setNbVolunteer($faker->numberBetween(1, 3));
-            $stall->setIsSensitive($faker->boolean(2));
-            $stall->setIsSitting($faker->boolean(10));
-            $stall->setFirstSlot(true);
-            $stall->setSecondSlot(true);
-            $stall->setThirdSlot(true);
-            $stall->setPrepare(false);
-            $stall->setTidy(false);
-            $manager->persist($stall);
+             $stall->setName($faker->jobTitle);
+             $stall->setNbVolunteer($faker->numberBetween(1, 3));
+             $stall->setIsSensitive($faker->boolean(2));
+             $stall->setIsSitting($faker->boolean(10));
+             $stall->setFirstSlot(true);
+             $stall->setSecondSlot(true);
+             $stall->setThirdSlot(true);
+             $stall->setPrepare(false);
+             $stall->setTidy(false);
+             $manager->persist($stall);
         }
 
         $user = new User();

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="schedule-main">
+        <div class="schedule-header">JE suis le header</div>
+        <div class="schedule-container"> 
+            
+                {% for stall in stalls %}
+                <div class='stall-container'>
+                    <div class="stall-header">
+                        <h3>{{stall.name | upper}}</h3>
+                        <p>Nbre de volontaires : {{stall.nbVolunteer}}</p>
+                    </div> 
+                    {% for part in stall.participations %}
+                        <div class="stall-body">
+                            <div class='slot'><p>{{part.slot}}</p></div>
+                            <div class = 'dropper'>
+                            <ul>
+                                {% for vol in part.volunteers %}
+                            {# mettre un if vol alors vol.name sinon vide #}
+                            {# limiter le nombre de div possible dans cette div au nombre de volontaires #}
+                                {# <div class="dropper"> #}
+                                <li class='dropped-item'>{{vol.name}}</li>
+                                    {# <div class"dropped-item">{{vol.name}}</div> #}
+                                {# </div> #}
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>    
+                    {% endfor %} 
+                    </div>
+                {% endfor %}
+              
+        </div>     
+            
+            <div class="volunteers-list">          
+                {% for vol in vol1 %} 
+                    <div class="volunteer1 draggable">{{vol.name}} - 1</div>
+                {% endfor %}
+                {% for vol in vol2 %} 
+                    <div class="volunteer2 draggable ">{{vol.name}} - 2</div>
+                {% endfor %}
+                {% for vol in vol3 %} 
+                    <div class="volunteer3 draggable">{{vol.name}} - 3</div>
+                {% endfor %}
+            </div>
+        
+    </div>
+{% endblock %}

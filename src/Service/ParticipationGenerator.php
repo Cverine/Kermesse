@@ -49,6 +49,7 @@ class ParticipationGenerator
     }
 
     /**
+     * On crée tous les créneaux de participation possibles pour chaque stand
      * @param Stall $stall
      */
     public function initializeParticipations($stall)
@@ -79,6 +80,7 @@ class ParticipationGenerator
                     $participation->setManual(false);
                     $participation->setStall($stall);
                     $participation->setSlot(self::SLOTS[$i]);
+                    // pour le stand rangement et préparation on affecte directement les parents car un seul créneau possible
                     if ($i === 4 || $i === 5 ) {
                         foreach ($volunteersList[$i] as $parent) {
                             $participation->addVolunteers($parent);
@@ -91,6 +93,9 @@ class ParticipationGenerator
         $manager->flush();
     }
 
+    /**
+     * On répartit d'abord tous les parents souhaitant un stand où ils peuvent s'assoir
+     */
     public function dispatchSittingVolunteers()
     {
         $manager = $this->manager;

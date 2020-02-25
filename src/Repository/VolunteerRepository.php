@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Participation;
 use App\Entity\Volunteer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -116,4 +117,44 @@ class VolunteerRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findWithoutParticipationBySlot1()
+    {
+        $rawSql = "SELECT v.name from volunteer v where v.first_slot = 1 and v.id NOT IN (
+                        select pv.volunteer_id from participation_volunteer pv
+                        left join participation p on p.id = pv.participation_id
+                        where p.slot = 1);";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($rawSql);
+        $stmt->execute([]);
+    
+        return $stmt->fetchAll();
+    }
+    
+    public function findWithoutParticipationBySlot2()
+    {
+        $rawSql = "SELECT v.name from volunteer v where v.second_slot = 1 and v.id NOT IN (
+                        select pv.volunteer_id from participation_volunteer pv
+                        left join participation p on p.id = pv.participation_id
+                        where p.slot = 2);";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($rawSql);
+        $stmt->execute([]);
+    
+        return $stmt->fetchAll();
+    }
+
+    public function findWithoutParticipationBySlot3()
+    {
+        $rawSql = "SELECT v.name from volunteer v where v.third_slot = 1 and v.id NOT IN (
+                        select pv.volunteer_id from participation_volunteer pv
+                        left join participation p on p.id = pv.participation_id
+                        where p.slot = 3);";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($rawSql);
+        $stmt->execute([]);
+    
+        return $stmt->fetchAll();
+    }
+
 }
